@@ -9,6 +9,7 @@
     content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <link rel="stylesheet" href="assets/fonts/fonts.css">
+  <link rel="stylesheet" href="assets/desk.css">
   <style>
     :root {
       --bg: #FDFDFB;
@@ -1547,6 +1548,87 @@
           ‘password123’ isn’t going to defend itself.&rdquo;</p>
       </div>
 
+      <nav class="desk" aria-label="Desk" hidden>
+        <svg class="desk-surface" viewBox="0 0 1000 24" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M6 14C180 8 420 17 610 11S880 9 994 15" />
+          <path class="desk-shade" d="M40 20h120M300 21h90M620 20h150M860 21h70" />
+        </svg>
+
+        <a class="desk-obj obj-notebook" href="#about" data-target="about">
+          <svg viewBox="0 0 130 120" aria-hidden="true">
+            <g transform="rotate(-7 65 62)">
+              <path class="f-yellow" d="M22 16L110 12l3 92-89 4z" />
+              <path class="thin" d="M38 40h58M38 54h52M38 68h56M38 82h40" />
+              <path class="f-pink" d="M88 12v26l7-6 7 6V12" />
+              <g class="rings">
+                <path d="M16 26a6 6 0 0 1 12 0M16 44a6 6 0 0 1 12 0M16 62a6 6 0 0 1 12 0M16 80a6 6 0 0 1 12 0M16 98a6 6 0 0 1 12 0" />
+              </g>
+            </g>
+            <path class="f-ink" d="M98 92l18-26 6 4-18 26-8 3z" />
+          </svg>
+          <span class="desk-label hand">About</span>
+        </a>
+
+        <a class="desk-obj obj-toolbox" href="#skills" data-target="skills">
+          <svg viewBox="0 0 160 120" aria-hidden="true">
+            <path class="f-ink-soft" d="M104 30l26-22 8 8-22 26" />
+            <circle cx="135" cy="11" r="7" class="f-paper" />
+            <path d="M54 42c0-16 52-16 52 0" />
+            <path class="f-blue" d="M16 42l128-2 2 70-130 2z" />
+            <path d="M17 62l127-2" />
+            <path class="f-paper" d="M70 54h20v14H70z" />
+            <path class="thin" d="M30 82h30M30 94h44M100 84h28" />
+          </svg>
+          <span class="desk-label hand">Skills</span>
+        </a>
+
+        <a class="desk-obj obj-board" href="#scars" data-target="scars">
+          <svg viewBox="0 0 240 150" aria-hidden="true">
+            <path class="desk-pin-string" d="M120 4L40 22M120 4l80 18" />
+            <circle class="f-ink" cx="120" cy="5" r="3.5" />
+            <path class="f-cork" d="M14 22L226 19 229 140 11 143z" />
+            <path d="M22 30L218 28 220 132 20 134z" class="thin" />
+            <g transform="rotate(-6 66 76)">
+              <path class="f-paper" d="M34 44h66v52H34z" />
+              <path class="thin" d="M44 58h46M44 68h38M44 78h42" />
+              <path class="f-yellow" d="M58 84l9-7 9 7-3-10 8-6h-10l-4-10-4 10h-10l8 6z" />
+            </g>
+            <g transform="rotate(5 150 78)">
+              <path class="f-paper" d="M116 46h70v54h-70z" />
+              <path class="thin" d="M126 60h50M126 70h40M126 80h46" />
+            </g>
+            <path class="f-sticky" d="M190 92h28v28h-28z" transform="rotate(-4 204 106)" />
+            <circle class="f-red" cx="67" cy="45" r="4" />
+            <circle class="f-red" cx="151" cy="47" r="4" />
+            <circle class="f-red" cx="204" cy="93" r="3.5" />
+            <path class="desk-redline" d="M70 98C96 124 126 118 150 100" />
+          </svg>
+          <span class="desk-label hand">Hackathons</span>
+        </a>
+
+        <a class="desk-obj obj-laptop" href="#work" data-target="work">
+          <svg viewBox="0 0 240 160" aria-hidden="true">
+            <path class="f-paper" d="M36 12L204 9l3 112-174 3z" />
+            <path class="f-screen" d="M48 23l144-2 2 88-148 2z" />
+            <path class="desk-code" d="M62 44l12 9-12 9M84 64h22" />
+            <path class="desk-code thin" d="M62 80h80M62 92h56" />
+            <path class="f-blue" d="M14 126l212-3 10 16c1 3-1 5-4 5H8c-3 0-5-2-4-5z" />
+            <path class="thin" d="M100 133h40" />
+          </svg>
+          <span class="desk-label hand">Work</span>
+        </a>
+
+        <a class="desk-obj obj-mug" href="#contact" data-target="contact">
+          <svg viewBox="0 0 90 120" aria-hidden="true">
+            <path class="desk-steam" d="M30 36c-6-8 6-12 0-22M46 34c-6-8 6-12 0-22" />
+            <path class="f-paper" d="M14 46h50l-4 60c0 6-4 9-10 9H28c-6 0-10-3-10-9z" />
+            <path d="M63 58c16-2 18 26 0 26" />
+            <path class="f-red" d="M39 92c-10-7-12-12-9-16 2-3 7-3 9 1 2-4 7-4 9-1 3 4 1 9-9 16z" />
+          </svg>
+          <span class="desk-label hand">Say hello</span>
+        </a>
+      </nav>
+
       <section class="s" id="about">
         <div class="sd a-tw" style="top:4rem;right:3%;width:40px" aria-hidden="true"><svg viewBox="0 0 40 40">
             <path d="M20 4l5 11 12 1-9 8 3 12-11-6-11 6 3-12-9-8 12-1z" />
@@ -1924,6 +2006,7 @@
   </div>
 
   <script src="assets/main.js"></script>
+  <script src="assets/desk.js"></script>
 </body>
 
 </html>

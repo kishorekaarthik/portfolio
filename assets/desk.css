@@ -1,0 +1,268 @@
+/* Desk navigation. Every rule is scoped to .desk-mode, which assets/desk.js
+   adds to <html>; without JS the page stays the classic long scroll. */
+
+.desk-mode {
+  --desk-yellow: #FFE8A3;
+  --desk-blue: #D6ECFF;
+  --desk-pink: #FFD6D6;
+  --desk-cork: #EBCFA6;
+  --desk-paper: #FFFFFF;
+  --desk-screen: #1F2430;
+  --desk-sticky: #FFF3A6;
+  --desk-red: #E5484D;
+  --desk-code: #9BE5B4;
+}
+
+.desk-mode[data-theme="dark"] {
+  --desk-yellow: #5A4D24;
+  --desk-blue: #22364D;
+  --desk-pink: #4D2A2F;
+  --desk-cork: #4A3A26;
+  --desk-paper: #20242B;
+  --desk-screen: #0B0D11;
+  --desk-sticky: #4F4A22;
+  --desk-red: #F0646A;
+  --desk-code: #6FD596;
+}
+
+/* ---------- compact hero ---------- */
+
+.desk-mode .hero {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, auto);
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  column-gap: 1.75rem;
+  text-align: left;
+  padding: 2.75rem 2rem 1.25rem;
+  overflow: visible
+}
+
+.desk-mode .hero .d,
+.desk-mode .hero .dot {
+  display: none
+}
+
+.desk-mode .avatar-wrap {
+  grid-row: 1 / span 3;
+  margin: 0
+}
+
+.desk-mode .avatar {
+  width: 96px
+}
+
+.desk-mode .hero h1 {
+  font-size: clamp(2rem, 3vw, 2.8rem)
+}
+
+.desk-mode .hero .role {
+  margin-top: .45rem;
+  font-size: 1.05rem
+}
+
+.desk-mode .hero .quote {
+  margin-top: .55rem;
+  max-width: 30rem;
+  font-size: 1.15rem
+}
+
+/* ---------- the desk ---------- */
+
+.desk-mode .desk {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr .6fr 1.5fr 1fr;
+  grid-template-areas:
+    ". board board ."
+    "note mug laptop tool";
+  align-items: end;
+  justify-items: center;
+  row-gap: .75rem;
+  column-gap: 1rem;
+  width: min(1000px, 100% - 3rem);
+  margin: 0 auto;
+  padding: 1rem 0 2.5rem;
+  color: var(--ink)
+}
+
+.desk svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  overflow: visible
+}
+
+.desk .desk-surface {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 4.6rem;
+  width: 100%;
+  height: 18px;
+  pointer-events: none
+}
+
+.desk .desk-shade {
+  stroke: var(--faint);
+  stroke-width: 2
+}
+
+.desk-obj {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: .35rem .5rem;
+  border-radius: 14px;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent
+}
+
+.desk-obj svg {
+  display: block;
+  width: auto;
+  transform-origin: 50% 90%;
+  transition: transform .2s ease
+}
+
+.desk-obj:hover svg,
+.desk-obj:focus-visible svg {
+  animation: deskWig .55s ease-in-out
+}
+
+.desk-obj:focus-visible {
+  outline: 2.5px dashed var(--ink);
+  outline-offset: 4px
+}
+
+.desk-label {
+  margin-top: 1.6rem;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--mute);
+  transition: color .2s
+}
+
+.desk-obj:hover .desk-label,
+.desk-obj:focus-visible .desk-label {
+  color: var(--ink)
+}
+
+.obj-board { grid-area: board }
+.obj-notebook { grid-area: note }
+.obj-mug { grid-area: mug }
+.obj-laptop { grid-area: laptop }
+.obj-toolbox { grid-area: tool }
+
+.obj-board .desk-label { margin-top: .35rem }
+
+.obj-board svg { height: clamp(90px, 19vh, 170px) }
+.obj-notebook svg { height: clamp(70px, 15vh, 140px) }
+.obj-mug svg { height: clamp(56px, 12vh, 112px) }
+.obj-laptop svg { height: clamp(90px, 22vh, 200px) }
+.obj-toolbox svg { height: clamp(66px, 14vh, 130px) }
+
+/* fills */
+.desk .thin { stroke-width: 1.6; opacity: .55 }
+.desk .f-yellow { fill: var(--desk-yellow) }
+.desk .f-blue { fill: var(--desk-blue) }
+.desk .f-pink { fill: var(--desk-pink) }
+.desk .f-cork { fill: var(--desk-cork) }
+.desk .f-paper { fill: var(--desk-paper) }
+.desk .f-screen { fill: var(--desk-screen) }
+.desk .f-sticky { fill: var(--desk-sticky) }
+.desk .f-red { fill: var(--desk-red) }
+.desk .f-ink { fill: currentColor }
+.desk .f-ink-soft { fill: color-mix(in srgb, currentColor 22%, transparent) }
+.desk .desk-code { stroke: var(--desk-code) }
+.desk .desk-redline { stroke: var(--desk-red); stroke-width: 1.5; stroke-dasharray: 4 4 }
+.desk .desk-pin-string { stroke-width: 1.6 }
+.desk .desk-steam {
+  stroke-width: 2;
+  opacity: .5;
+  animation: deskSteam 2.6s ease-in-out infinite
+}
+
+@keyframes deskWig {
+  0%, 100% { transform: rotate(0) }
+  25% { transform: rotate(-3deg) }
+  50% { transform: rotate(2.5deg) }
+  75% { transform: rotate(-1.5deg) }
+}
+
+@keyframes deskSteam {
+  0%, 100% { transform: translateY(0); opacity: .5 }
+  50% { transform: translateY(-4px); opacity: .2 }
+}
+
+/* ---------- phones ---------- */
+
+@media (max-width: 900px) {
+  .desk-mode .hero {
+    column-gap: 1rem;
+    padding: 1.25rem 1.25rem .5rem
+  }
+
+  .desk-mode .avatar {
+    width: 64px
+  }
+
+  .desk-mode .hero h1 {
+    font-size: 1.85rem
+  }
+
+  .desk-mode .hero .role {
+    font-size: .95rem;
+    letter-spacing: .01em
+  }
+
+  .desk-mode .hero .quote {
+    font-size: 1rem
+  }
+
+  .desk-mode .desk {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "board board"
+      "note tool"
+      "laptop mug";
+    row-gap: 1rem;
+    width: calc(100% - 2rem);
+    padding: .5rem 0 1.5rem
+  }
+
+  .desk .desk-surface {
+    display: none
+  }
+
+  .desk-label {
+    margin-top: .4rem;
+    font-size: 1.25rem
+  }
+
+  .obj-board svg { height: clamp(70px, 13vh, 120px) }
+  .obj-notebook svg,
+  .obj-toolbox svg,
+  .obj-mug svg { height: clamp(56px, 11vh, 96px) }
+  .obj-laptop svg { height: clamp(60px, 12vh, 104px) }
+}
+
+.desk[hidden] {
+  display: none
+}
+
+/* Phones: the desk replaces the section links in the top bar, which
+   otherwise overflow and push the theme toggle off-screen. */
+@media (max-width: 900px) {
+  .desk-mode header.sidebar nav a:not(.btn) {
+    display: none
+  }
+}
