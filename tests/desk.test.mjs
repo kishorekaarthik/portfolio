@@ -283,3 +283,54 @@ test('pressing Escape twice quickly never leaves the site', async () => {
   assert.equal(await p.eval(STATE), 'desk');
   await p.close();
 });
+
+// ---------- Task 5: phone sheet bar, theme toggle, resize ----------
+const PHONE = { width: 390, height: 844, mobile: true };
+const left = (id) => `Math.round(document.getElementById('${id}').getBoundingClientRect().left)`;
+
+test('phone: sheet is full-screen with its own section bar', async () => {
+  const p = await page('/#skills', PHONE);
+  await p.waitFor(`${STATE} === 'sheet'`);
+  assert.equal(await p.eval(left('skills')), 0);
+  assert.equal(await p.eval(`Math.round(document.getElementById('skills').getBoundingClientRect().width)`), 390);
+  assert.equal(await p.eval(`document.querySelector('#skills .sheet-nav').offsetHeight > 0`), true);
+  assert.equal(await p.eval(`document.querySelector('#skills .sheet-tg').offsetWidth > 0`), true);
+  assert.equal(await p.eval(`document.documentElement.scrollWidth <= document.documentElement.clientWidth`), true);
+  await p.click('#skills .sheet-nav a[href="#work"]');
+  await p.waitFor(`location.hash === '#work' && ${STATE} === 'sheet'`);
+  assert.equal(await p.eval(`document.querySelector('#work .sheet-nav a[aria-current="page"]').getAttribute('href')`), '#work');
+  await p.close();
+});
+
+test('desktop: sheet bar hides section links and sheet starts after the sidebar', async () => {
+  const p = await page('/#skills');
+  await p.waitFor(`${STATE} === 'sheet'`);
+  assert.equal(await p.eval(`document.querySelector('#skills .sheet-nav').offsetHeight`), 0);
+  assert.ok(await p.eval(left('skills')) >= 280);
+  await p.close();
+});
+
+test('theme toggle in sheet works and persists after closing', async () => {
+  const p = await page('/#work', PHONE);
+  await p.waitFor(`${STATE} === 'sheet'`);
+  const before = await p.eval(`document.documentElement.dataset.theme`);
+  await p.click('#work .sheet-tg');
+  const after = await p.eval(`document.documentElement.dataset.theme`);
+  assert.notEqual(after, before);
+  await p.click('#work .sheet-close');
+  await p.waitFor(`${STATE} === 'desk'`);
+  assert.equal(await p.eval(`document.documentElement.dataset.theme`), after);
+  assert.equal(await p.eval(`localStorage.getItem('kk-theme')`), after);
+  await p.close();
+});
+
+test('resize across 900px keeps the sheet open', async () => {
+  const p = await page('/#about');
+  await p.waitFor(`${STATE} === 'sheet'`);
+  await p.resize(390, 844);
+  assert.equal(await p.eval(left('about')), 0);
+  await p.resize(1280, 800);
+  assert.ok(await p.eval(left('about')) >= 280);
+  assert.equal(await p.eval(STATE), 'sheet');
+  await p.close();
+});

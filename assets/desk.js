@@ -162,7 +162,7 @@
     if (id === current) return;
 
     if (!animate) {
-      root.classList.toggle('desk-zoom', !!id);
+      root.classList.remove('desk-zoom');
       applyDom(id);
       root.dataset.deskState = id ? 'sheet' : 'desk';
       return;
@@ -237,6 +237,11 @@
     if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     var t = e.target;
     if (!t || !t.closest) return;
+    if (t.closest('.sheet-tg')) {
+      var mainToggle = document.getElementById('tg');
+      if (mainToggle) mainToggle.click();
+      return;
+    }
     if (t.closest('.sheet-close')) {
       e.preventDefault();
       requestClose();
