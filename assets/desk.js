@@ -210,7 +210,8 @@
       return;
     }
     if (awaitingPop || id === current) return;
-    var push = !current;
+    // Decide from the URL, not the screen: mid-animation they can disagree.
+    var push = !idFromHash();
     var fromDesk = push ? true : !!(history.state && history.state.fromDesk);
     var state = { kk: 'sheet', fromDesk: fromDesk };
     if (push) history.pushState(state, '', '#' + id);

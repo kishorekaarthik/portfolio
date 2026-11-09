@@ -334,3 +334,58 @@ test('resize across 900px keeps the sheet open', async () => {
   assert.equal(await p.eval(STATE), 'sheet');
   await p.close();
 });
+
+// ---------- Final review fixes ----------
+for (const [w, h] of [[1280, 800], [1920, 1080]]) {
+  test(`sheet content is as wide as the long page's (${w}px)`, async () => {
+    const p = await page('/#work', { width: w, height: h });
+    await p.waitFor(`${STATE} === 'sheet'`);
+    const m = await p.eval(`(() => {
+      const s = document.getElementById('work'), cs = getComputedStyle(s);
+      const inner = s.querySelector(".sheet-pn").getBoundingClientRect().width;
+      const c = Math.min(Math.max(24, innerWidth * 0.04), 56);
+      const sheetInner = s.clientWidth;
+      const bar = s.querySelector('.sheet-bar').getBoundingClientRect(), r = s.getBoundingClientRect();
+      return { inner, expected: Math.min(1100, sheetInner) - 2 * c, barL: bar.left - r.left, barR: r.left + s.clientWidth - bar.right };
+    })()`);
+    assert.ok(Math.abs(m.inner - m.expected) <= 6, JSON.stringify(m));
+    assert.ok(Math.abs(m.barL) <= 3 && Math.abs(m.barR) <= 3, 'sheet bar spans the sheet: ' + JSON.stringify(m));
+    await p.close();
+  });
+}
+
+test('Back during opening then another click: Back still returns to the desk', async () => {
+  const p = await page();
+  await p.eval(`(() => {
+    document.querySelector('.desk-obj[data-target="work"]').click();
+    setTimeout(() => history.back(), 30);
+    setTimeout(() => document.querySelector('.desk-obj[data-target="contact"]').click(), 60);
+  })()`);
+  await new Promise((r) => setTimeout(r, 120));
+  await p.waitFor(`${STATE} === 'sheet' && location.hash === '#contact'`, 3000);
+  await p.eval(`history.back()`);
+  await p.waitFor(`${STATE} === 'desk'`, 3000);
+  assert.equal(await p.eval(`location.origin + location.pathname`), url + '/');
+  assert.equal(await p.eval(`location.hash`), '');
+  await p.close();
+});
+
+for (const [w, h] of [[375, 667], [360, 640]]) {
+  test(`small phone: whole desk on the first screen (${w}x${h})`, async () => {
+    const p = await page('/', { width: w, height: h, mobile: true });
+    await p.waitFor(`${STATE} === 'desk'`);
+    const rects = await p.eval(`[...document.querySelectorAll('.desk-obj')].map(a => { const r = a.getBoundingClientRect(); return [a.dataset.target, Math.round(r.top), Math.round(r.bottom), Math.round(r.height)]; })`);
+    assert.ok(rects.every(([, t, b, hh]) => t >= 0 && b <= h && hh >= 44), JSON.stringify(rects));
+    await p.close();
+  });
+}
+
+test('page hides itself when framed', async () => {
+  const p = await browser.newPage();
+  await p.goto(url + '/tests/fixtures/frame.html');
+  const fr = `document.getElementById('fr').contentDocument`;
+  await p.waitFor(`${fr} && ${fr}.documentElement.classList.contains('desk-mode')`);
+  assert.equal(await p.eval(`getComputedStyle(${fr}.body).visibility`), 'hidden');
+  assert.equal(await p.eval(`location.pathname`), '/tests/fixtures/frame.html');
+  await p.close();
+});

@@ -248,11 +248,11 @@
     font-size: 1.25rem
   }
 
-  .obj-board svg { height: clamp(70px, 13vh, 120px) }
+  .obj-board svg { height: clamp(56px, 12svh, 120px) }
   .obj-notebook svg,
   .obj-toolbox svg,
-  .obj-mug svg { height: clamp(56px, 11vh, 96px) }
-  .obj-laptop svg { height: clamp(60px, 12vh, 104px) }
+  .obj-mug svg { height: clamp(44px, 9.5svh, 96px) }
+  .obj-laptop svg { height: clamp(48px, 10svh, 104px) }
 }
 
 .desk[hidden] {
@@ -294,7 +294,8 @@
   z-index: 50;
   max-width: none;
   margin: 0;
-  padding: 0 max(clamp(1.5rem, 4vw, 3.5rem), (100% - 1100px) / 2) 3rem;
+  --sheet-pad: clamp(1.5rem, 4vw, 3.5rem);
+  padding: 0 var(--sheet-pad) 3rem;
   overflow-y: auto;
   overscroll-behavior: contain;
   background: var(--card);
@@ -317,8 +318,8 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin: 0 calc(-1 * max(clamp(1.5rem, 4vw, 3.5rem), (100vw - var(--sidebar-w) - 3rem - 1100px) / 2)) 2rem;
-  padding: .9rem max(clamp(1.5rem, 4vw, 3.5rem), (100vw - var(--sidebar-w) - 3rem - 1100px) / 2);
+  margin: 0 calc(-1 * var(--sheet-pad)) 2rem;
+  padding: .9rem var(--sheet-pad);
   background: var(--card);
   border-bottom: 1.5px dashed var(--faint)
 }
@@ -429,7 +430,8 @@
     left: 0;
     right: 0;
     z-index: 200;
-    padding: 0 1.25rem 3rem;
+    --sheet-pad: 1.25rem;
+    padding: 0 var(--sheet-pad) 3rem;
     border: 0;
     border-radius: 0;
     box-shadow: none
@@ -479,4 +481,36 @@
 /* The zoom scales the desk past the viewport edge; never let that widen the page. */
 .desk-mode .wrapper {
   overflow-x: clip
+}
+
+/* Keep sheet content exactly as wide as the long page's sections
+   (max 1100px minus the same side padding), centred in the sheet. */
+.desk-mode section.s.is-open > :not(.sheet-bar):not(.sd) {
+  max-width: calc(1100px - 2 * var(--sheet-pad));
+  margin-left: auto;
+  margin-right: auto
+}
+
+/* Short phones (iPhone SE and similar): tighten so the whole desk fits. */
+@media (max-width: 900px) and (max-height: 720px) {
+  .desk-mode .hero {
+    padding-top: .75rem;
+    padding-bottom: .25rem
+  }
+
+  .desk-mode .hero .quote {
+    margin-top: .35rem;
+    font-size: .92rem;
+    line-height: 1.2
+  }
+
+  .desk-mode .desk {
+    row-gap: .5rem;
+    padding: .25rem 0 1rem
+  }
+
+  .desk-label {
+    margin-top: .2rem;
+    font-size: 1.1rem
+  }
 }

@@ -66,10 +66,16 @@ class Page {
   }
   send(method, params) { return this.conn.send(method, params, this.sessionId); }
 
-  async goto(url) {
+  async goto(url, timeoutMs = 10000) {
+    let timer;
     const loaded = new Promise((r) => this.loadWaiters.push(r));
-    await this.send('Page.navigate', { url });
-    await loaded;
+    const timeout = new Promise((_, rej) => { timer = setTimeout(() => rej(new Error(`goto timed out: ${url}`)), timeoutMs); });
+    try {
+      await this.send('Page.navigate', { url });
+      await Promise.race([loaded, timeout]);
+    } finally {
+      clearTimeout(timer);
+    }
   }
 
   async eval(expr) {

@@ -2,8 +2,10 @@
   'use strict';
 
   // Clickjacking defence: GitHub Pages can't send X-Frame-Options or a
-  // frame-ancestors header, so break out if another site frames this page.
+  // frame-ancestors header. If framed, hide the page (browsers often block
+  // the break-out below) and try to break out anyway.
   if (window.top !== window.self) {
+    document.documentElement.classList.add('kk-framed');
     try { window.top.location.replace(window.location.href); } catch (e) { }
   }
 
