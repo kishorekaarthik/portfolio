@@ -20,7 +20,7 @@ try {
         const p = await browser.newPage({ width: w, height: h, mobile: w < 900 });
         await p.goto(server.url + '/');
         await p.eval(`localStorage.setItem('kk-theme', '${theme}')`);
-        await p.goto(server.url + '/' + (hash ? '#' + hash : ''));
+        await p.goto(server.url + '/?shot=' + theme + (hash ? '#' + hash : ''));
         await p.waitFor(`['desk','sheet'].includes(document.documentElement.dataset.deskState)`);
         await new Promise((r) => setTimeout(r, 400));
         const file = path.join(out, `${hash || 'desk'}-${name}-${theme}.png`);

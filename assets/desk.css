@@ -266,3 +266,113 @@
     display: none
   }
 }
+
+/* ---------- sheets ---------- */
+
+.desk-mode body.sheet-open {
+  overflow: hidden
+}
+
+.desk-mode body.sheet-open .hero,
+.desk-mode body.sheet-open .desk,
+.desk-mode body.sheet-open footer {
+  opacity: .22
+}
+
+.desk-mode .hero,
+.desk-mode .desk,
+.desk-mode footer {
+  transition: opacity .25s ease
+}
+
+.desk-mode section.s.is-open {
+  position: fixed;
+  top: 1.25rem;
+  bottom: 0;
+  left: calc(var(--sidebar-w) + 1.5rem);
+  right: 1.5rem;
+  z-index: 50;
+  max-width: none;
+  margin: 0;
+  padding: 0 max(clamp(1.5rem, 4vw, 3.5rem), (100% - 1100px) / 2) 3rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-bottom: 0;
+  border-radius: 18px 14px 0 0;
+  box-shadow: 0 -12px 40px rgba(0, 0, 0, .12)
+}
+
+.desk-mode section.s.is-open:focus,
+.desk-mode section.s.is-open:focus-visible,
+.desk-mode section.s.is-open > h2:focus {
+  outline: none
+}
+
+.sheet-bar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0 calc(-1 * max(clamp(1.5rem, 4vw, 3.5rem), (100vw - var(--sidebar-w) - 3rem - 1100px) / 2)) 2rem;
+  padding: .9rem max(clamp(1.5rem, 4vw, 3.5rem), (100vw - var(--sidebar-w) - 3rem - 1100px) / 2);
+  background: var(--card);
+  border-bottom: 1.5px dashed var(--faint)
+}
+
+.sheet-close {
+  padding: .3rem .95rem;
+  font: inherit;
+  font-family: 'Gaegu', 'Patrick Hand', cursive;
+  font-size: 1.25rem;
+  line-height: 1.2;
+  color: var(--ink);
+  background: transparent;
+  border: 2px solid var(--ink);
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  cursor: pointer
+}
+
+.sheet-close:hover {
+  background: var(--ink);
+  color: var(--bg)
+}
+
+.sheet-close:focus-visible,
+.sheet-pn a:focus-visible,
+.sheet-nav a:focus-visible {
+  outline: 2.5px dashed var(--ink);
+  outline-offset: 3px
+}
+
+.sheet-bar .sheet-nav,
+.sheet-bar .sheet-tg {
+  display: none
+}
+
+.sheet-pn {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1.5px dashed var(--faint);
+  font-size: 1.4rem
+}
+
+.sheet-pn a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 2px solid transparent
+}
+
+.sheet-pn a:hover {
+  border-bottom-color: var(--ink)
+}
+
+.sheet-pn .sheet-next {
+  margin-left: auto
+}
