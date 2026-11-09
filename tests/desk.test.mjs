@@ -389,3 +389,12 @@ test('page hides itself when framed', async () => {
   assert.equal(await p.eval(`location.pathname`), '/tests/fixtures/frame.html');
   await p.close();
 });
+
+test('site declares a favicon that loads (no /favicon.ico 404)', async () => {
+  const p = await browser.newPage();
+  await p.goto(url + '/');
+  const href = await p.eval(`document.querySelector('link[rel~="icon"]')?.href || null`);
+  assert.ok(href, 'no <link rel="icon">');
+  assert.equal(await p.eval(`new Promise(res => { const i = new Image(); i.onload = () => res(i.naturalWidth > 0); i.onerror = () => res(false); i.src = ${JSON.stringify(href)}; })`), true);
+  await p.close();
+});
