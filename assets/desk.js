@@ -93,8 +93,8 @@
 
   // ---------- rendering ----------
 
-  function render(id) {
-    if (id === current) return;
+  // Make the DOM match `id` (null = desk). No animation, no state label.
+  function applyDom(id) {
     var prev = current;
     current = id;
 
@@ -111,7 +111,6 @@
       if (id && a.getAttribute('href') === '#' + id) a.setAttribute('aria-current', 'page');
       else a.removeAttribute('aria-current');
     });
-    root.dataset.deskState = id ? 'sheet' : 'desk';
 
     if (id) {
       lastOpener = id;
@@ -124,20 +123,109 @@
     }
   }
 
+  // ---------- transitions ----------
+
+  var busy = false;      // a transition is running
+  var target = null;     // where the running transition is heading
+  var pending = null;    // latest action requested while busy
+  var awaitingPop = false; // history.back() issued, popstate not seen yet
+  var reduceMotion = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
+
+  function after(el, cls, ms, done) {
+    var finished = false;
+    function finish() {
+      if (finished) return;
+      finished = true;
+      el.removeEventListener('animationend', onEnd);
+      if (cls) el.classList.remove(cls);
+      done();
+    }
+    function onEnd(e) { if (e.target === el) finish(); }
+    el.addEventListener('animationend', onEnd);
+    setTimeout(finish, ms);
+  }
+
+  function settle() {
+    busy = false;
+    root.dataset.deskState = current ? 'sheet' : 'desk';
+    var next = pending;
+    pending = null;
+    if (next) next();
+  }
+
+  function render(id, opts) {
+    var animate = !(opts && opts.animate === false) && !reduceMotion.matches;
+    if (busy) {
+      pending = function () { render(idFromHash(), opts); };
+      return;
+    }
+    if (id === current) return;
+
+    if (!animate) {
+      root.classList.toggle('desk-zoom', !!id);
+      applyDom(id);
+      root.dataset.deskState = id ? 'sheet' : 'desk';
+      return;
+    }
+
+    busy = true;
+    target = id;
+    if (id && !current) {
+      root.dataset.deskState = 'opening';
+      var obj = desk.querySelector('.desk-obj[data-target="' + id + '"]');
+      if (obj) {
+        var d = desk.getBoundingClientRect(), r = obj.getBoundingClientRect();
+        desk.style.transformOrigin = (r.left - d.left + r.width / 2) + 'px ' + (r.top - d.top + r.height / 2) + 'px';
+      }
+      root.classList.add('desk-zoom');
+      setTimeout(function () {
+        applyDom(id);
+        var sec = byId[id].el;
+        sec.classList.add('sheet-enter');
+        after(sec, 'sheet-enter', 450, settle);
+      }, 170);
+    } else if (id && current) {
+      root.dataset.deskState = 'switching';
+      applyDom(id);
+      var sw = byId[id].el;
+      sw.classList.add('sheet-swap');
+      after(sw, 'sheet-swap', 350, settle);
+    } else {
+      root.dataset.deskState = 'closing';
+      var out = byId[current].el;
+      out.classList.add('sheet-leave');
+      after(out, 'sheet-leave', 400, function () {
+        applyDom(null);
+        root.classList.remove('desk-zoom');
+        settle();
+      });
+    }
+  }
+
   // ---------- navigation ----------
 
-  function go(id, mode) {
-    if (id === current) return;
-    var fromDesk = mode === 'push' ? true : !!(history.state && history.state.fromDesk);
+  function go(id) {
+    if (busy) {
+      pending = function () { go(id); };
+      return;
+    }
+    if (awaitingPop || id === current) return;
+    var push = !current;
+    var fromDesk = push ? true : !!(history.state && history.state.fromDesk);
     var state = { kk: 'sheet', fromDesk: fromDesk };
-    if (mode === 'push') history.pushState(state, '', '#' + id);
+    if (push) history.pushState(state, '', '#' + id);
     else history.replaceState(state, '', '#' + id);
     render(id);
   }
 
   function requestClose() {
-    if (!current) return;
+    if (busy) {
+      pending = requestClose;
+      return;
+    }
+    if (!current || awaitingPop) return;
     if (history.state && history.state.fromDesk) {
+      awaitingPop = true;
       history.back();
     } else {
       history.replaceState(null, '', location.pathname + location.search);
@@ -159,7 +247,7 @@
     var id = a.getAttribute('href').slice(1);
     if (byId[id]) {
       e.preventDefault();
-      go(id, current ? 'replace' : 'push');
+      go(id);
     } else if ((id === 'top' || id === '') && current) {
       e.preventDefault();
       requestClose();
@@ -173,7 +261,7 @@
     }
   });
 
-  function onHistory() { render(idFromHash()); }
+  function onHistory() { awaitingPop = false; render(idFromHash()); }
   window.addEventListener('popstate', onHistory);
   window.addEventListener('hashchange', onHistory);
 
@@ -185,6 +273,6 @@
   desk.hidden = false;
   SECTIONS.forEach(function (s) { s.el.hidden = true; });
   root.dataset.deskState = 'desk';
-  render(idFromHash());
+  render(idFromHash(), { animate: false });
   window.scrollTo(0, 0);
 })();

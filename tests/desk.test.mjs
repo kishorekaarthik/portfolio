@@ -214,3 +214,72 @@ test('desktop: open sheet has a single border and no theme button in its bar', a
   assert.equal(await p.eval(`document.querySelector('#scars .sheet-tg').offsetWidth`), 0);
   await p.close();
 });
+
+// ---------- Task 4: transitions ----------
+test('double click on an object adds one history entry', async () => {
+  const p = await page();
+  const len0 = await p.eval(`history.length`);
+  await p.click('.desk-obj[data-target="work"]');
+  await p.eval(`document.querySelector('.desk-obj[data-target="work"]').click()`);
+  await p.waitFor(`${STATE} === 'sheet'`, 1500);
+  assert.equal(await p.eval(`history.length`), len0 + 1);
+  assert.deepEqual(await p.eval(visibleSections), ['work']);
+  await p.close();
+});
+
+test('opening animates through the opening state', async () => {
+  const p = await page();
+  await p.click('.desk-obj[data-target="skills"]');
+  assert.equal(await p.eval(STATE), 'opening');
+  await p.waitFor(`${STATE} === 'sheet'`, 1500);
+  await p.click('#skills .sheet-next');
+  assert.equal(await p.eval(STATE), 'switching');
+  await p.waitFor(`${STATE} === 'sheet' && location.hash === '#scars'`, 1500);
+  await p.click('#scars .sheet-close');
+  await p.waitFor(`${STATE} === 'closing' || ${STATE} === 'desk'`, 500);
+  await p.waitFor(`${STATE} === 'desk'`, 1500);
+  await p.close();
+});
+
+test('clicks during an animation land on the latest target', async () => {
+  const p = await page();
+  await p.click('.desk-obj[data-target="about"]');
+  await p.eval(`document.querySelector('header.sidebar nav a[href="#work"]').click()`);
+  await p.waitFor(`${STATE} === 'sheet' && location.hash === '#work'`, 2000);
+  assert.deepEqual(await p.eval(visibleSections), ['work']);
+  await p.close();
+});
+
+test('reduced motion: no transform on desk or sheet while opening', async () => {
+  const p = await page('/', { reducedMotion: true });
+  await p.click('.desk-obj[data-target="skills"]');
+  const during = await p.eval(`[getComputedStyle(document.querySelector('.desk')).transform, getComputedStyle(document.getElementById('skills')).transform]`);
+  assert.deepEqual(during, ['none', 'none']);
+  await p.waitFor(`${STATE} === 'sheet'`, 1500);
+  assert.equal(await p.eval(`getComputedStyle(document.querySelector('.desk')).transform`), 'none');
+  assert.equal(await p.eval(`getComputedStyle(document.getElementById('skills')).transform`), 'none');
+  await p.close();
+});
+
+test('transitions settle within 1s', async () => {
+  const p = await page();
+  await p.click('.desk-obj[data-target="about"]');
+  await p.waitFor(`${STATE} === 'sheet'`, 1000);
+  await p.click('#about .sheet-next');
+  await p.waitFor(`${STATE} === 'sheet' && location.hash === '#skills'`, 1000);
+  await p.press('Escape');
+  await p.waitFor(`${STATE} === 'desk'`, 1000);
+  assert.deepEqual(p.errors, []);
+  await p.close();
+});
+
+test('pressing Escape twice quickly never leaves the site', async () => {
+  const p = await page();
+  await p.click('.desk-obj[data-target="about"]');
+  await p.waitFor(`${STATE} === 'sheet'`, 1500);
+  await p.eval(`(() => { const ev = () => new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }); document.dispatchEvent(ev()); document.dispatchEvent(ev()); })()`);
+  await new Promise((r) => setTimeout(r, 800));
+  assert.equal(await p.eval(`location.origin + location.pathname`), url + '/');
+  assert.equal(await p.eval(STATE), 'desk');
+  await p.close();
+});

@@ -376,3 +376,47 @@
 .sheet-pn .sheet-next {
   margin-left: auto
 }
+
+/* ---------- transitions ---------- */
+
+.desk-mode .desk {
+  transition: transform .2s ease, opacity .2s ease
+}
+
+.desk-mode.desk-zoom .desk {
+  transform: scale(1.12);
+  opacity: .22
+}
+
+.desk-mode section.s.sheet-enter {
+  animation: deskSheetUp .3s cubic-bezier(.2, .8, .2, 1) both
+}
+
+.desk-mode section.s.sheet-swap {
+  animation: deskSheetSwap .22s ease-out both
+}
+
+.desk-mode section.s.sheet-leave {
+  animation: deskSheetDown .26s ease-in both
+}
+
+@keyframes deskSheetUp {
+  from { transform: translateY(100%) }
+  to { transform: none }
+}
+
+@keyframes deskSheetSwap {
+  from { opacity: 0; transform: translateX(28px) }
+  to { opacity: 1; transform: none }
+}
+
+@keyframes deskSheetDown {
+  from { transform: none }
+  to { transform: translateY(105%) }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .desk-mode.desk-zoom .desk {
+    transform: none
+  }
+}
