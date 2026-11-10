@@ -1952,6 +1952,34 @@
             <a class="repo-link hand" href="https://github.com/kishorekaarthik/Cybershield" target="_blank"
               rel="noopener">View the code on GitHub &rarr;</a>
           </article>
+          <article class="card wob card-wide">
+            <h3>SecureDB Vault</h3>
+            <p class="k">Multi-tenant PII tokenization service, built for the DPDP Act 2023</p>
+            <p>A vault for the data nobody should be able to read: PAN, Aadhaar and bank account numbers go in through a
+              REST API and come back out as tokens. Every company using it gets its own locked room, every access is
+              written down in ink that can&rsquo;t be erased, and the real values only come out when a policy says so.
+            </p>
+            <ul class="detail-list">
+              <li><strong>Envelope encryption.</strong> Each tenant gets its own AES-256-GCM data key, wrapped by a master
+                key that lives in the OS keychain. Every ciphertext is cryptographically bound to its tenant, token and
+                key version, so a value copied into the wrong place simply won&rsquo;t decrypt.</li>
+              <li><strong>Tenant isolation in the database.</strong> Forced PostgreSQL row-level security plus a
+                least-privilege application role with column-level grants. Even a bug in the API can&rsquo;t read
+                another tenant&rsquo;s rows.</li>
+              <li><strong>Tamper-evident audit log.</strong> A hash-chained log written in the same transaction as every
+                operation, with a verification endpoint that pinpoints exactly which entry was edited, deleted or
+                reordered. The audit table is append-only.</li>
+              <li><strong>Deny-by-default access.</strong> Per-API-key policies decide allow, mask or deny for each field
+                type, with scoped keys, rate limiting, and responses that never echo back what you sent.</li>
+              <li><strong>DPDP rights and key rotation.</strong> Data-subject erasure and export, zero-downtime data-key
+                rotation with resumable batched re-encryption, and crash-safe master-key rotation.</li>
+              <li><strong>Tested like it matters.</strong> 410+ automated tests (unit, property-based, concurrency and
+                security-regression) run against a real PostgreSQL instance, with strict type checking and linting.</li>
+            </ul>
+            <p class="st hand">Python, FastAPI, PostgreSQL, SQLAlchemy, AES-256-GCM, Argon2id</p>
+            <a class="repo-link hand" href="https://github.com/kishorekaarthik/SecureDB" target="_blank"
+              rel="noopener">View the code on GitHub &rarr;</a>
+          </article>
           <article class="card wob">
             <h3>CyberVault</h3>
             <p class="k">Web app, the digital safe</p>
