@@ -1612,6 +1612,167 @@
       }
     }
 
+    /* ---------- Say hello extras ---------- */
+    .contact-status {
+      margin: 1.25rem auto 0
+    }
+
+    .contact-meta {
+      margin: .7rem 0 0;
+      font-size: 1.25rem;
+      color: var(--mute)
+    }
+
+    .contact-actions {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1.75rem
+    }
+
+    .resume-btn {
+      font-size: 1.25rem;
+      text-decoration: none
+    }
+
+    .doodle-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1.25rem 1.75rem
+    }
+
+    .doodle-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .35rem;
+      color: var(--ink);
+      text-decoration: none
+    }
+
+    .doodle-icon {
+      display: grid;
+      place-items: center;
+      width: 62px;
+      height: 62px;
+      border: 2px solid var(--ink);
+      border-radius: 58% 42% 55% 45% / 45% 55% 45% 55%;
+      background: var(--card);
+      box-shadow: 3px 3px 0 var(--ink);
+      transition: transform .2s
+    }
+
+    .doodle-icon svg {
+      width: 32px;
+      height: 32px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.4;
+      stroke-linecap: round;
+      stroke-linejoin: round
+    }
+
+    .doodle-label {
+      font-size: 1.15rem;
+      color: var(--mute)
+    }
+
+    .doodle-link:hover .doodle-icon,
+    .doodle-link:focus-visible .doodle-icon {
+      animation: linkWig .55s ease-in-out
+    }
+
+    .doodle-link:hover .doodle-label {
+      color: var(--ink)
+    }
+
+    @keyframes linkWig {
+      0%, 100% { transform: rotate(0) }
+      25% { transform: rotate(-6deg) }
+      50% { transform: rotate(5deg) }
+      75% { transform: rotate(-3deg) }
+    }
+
+    .wave-signoff {
+      display: inline-flex;
+      align-items: center;
+      gap: .9rem;
+      margin-top: 2.25rem;
+      color: var(--ink);
+      text-decoration: none
+    }
+
+    @keyframes handWave {
+      0%, 60%, 100% { transform: rotate(0) }
+      10%, 30% { transform: rotate(18deg) }
+      20%, 40% { transform: rotate(-10deg) }
+      50% { transform: rotate(8deg) }
+    }
+
+    .wave-signoff[hidden] {
+      display: none
+    }
+
+    .wave-bubble {
+      position: relative;
+      padding: .55rem 1rem;
+      font-size: 1.35rem;
+      background: var(--card);
+      border: 2px solid var(--ink);
+      border-radius: 18px 14px 18px 6px;
+      box-shadow: 3px 3px 0 var(--ink);
+      transition: transform .2s
+    }
+
+    .wave-signoff:hover .wave-bubble,
+    .wave-signoff:focus-visible .wave-bubble {
+      transform: translateY(-3px) rotate(-2deg)
+    }
+
+    .wave-face {
+      position: relative;
+      display: block;
+      width: 84px;
+      height: 84px
+    }
+
+    .wave-face img {
+      width: 84px;
+      height: 84px;
+      border-radius: 50%;
+      border: 2.5px solid var(--ink);
+      background: #F5F3EE;
+      object-fit: cover
+    }
+
+    .wave-hand {
+      position: absolute;
+      right: -18px;
+      top: -6px;
+      width: 34px;
+      fill: var(--card);
+      stroke: var(--ink);
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transform-origin: 40% 90%;
+      animation: handWave 1.8s ease-in-out infinite
+    }
+
+    @media (max-width: 900px) {
+      .contact-meta {
+        font-size: 1.1rem
+      }
+
+      .doodle-links {
+        gap: 1rem 1.25rem
+      }
+
+      .wave-bubble {
+        font-size: 1.15rem
+      }
+    }
+
   </style>
 </head>
 
@@ -2182,13 +2343,48 @@
           </svg></div>
         <h2>Say hello</h2>
         <p class="sub hand" style="margin-bottom:0">open to work. bring coffee, bugs or job offers.</p>
+        <p class="status contact-status"><b aria-hidden="true"></b>Available for work &middot; full-time software &amp;
+          cybersecurity roles</p>
+        <p class="contact-meta hand"><span aria-hidden="true">📍</span> Tamil Nadu, India &middot; IST (UTC+5:30)
+          &middot; replies faster than my code compiles</p>
         <a class="mail" href="#contact" data-mail-user="skishorekaarthik" data-mail-domain="gmail.com">skishorekaarthik
           [at] gmail [dot] com</a>
-        <div class="links">
-          <a class="btn wob" href="https://github.com/kishorekaarthik" target="_blank" rel="noopener">GitHub</a>
-          <a class="btn wob" href="https://www.linkedin.com/in/kishore-kaarthik-487853257" target="_blank"
-            rel="noopener">LinkedIn</a>
+        <div class="contact-actions">
+          <a class="btn wob resume-btn hand" href="assets/kishore_kaarthik_general_resume.pdf" download><span
+              aria-hidden="true">📄</span> Grab my résumé</a>
         </div>
+        <div class="doodle-links">
+          <a class="doodle-link" href="https://github.com/kishorekaarthik" target="_blank" rel="noopener">
+            <span class="doodle-icon" aria-hidden="true"><svg viewBox="0 0 44 44">
+                <path d="M11 33c-4-4-5-10-3-15l-1-9 7 4c5-2 11-2 16 0l7-4-1 9c2 5 1 11-3 15" />
+                <path d="M17 34c0 3 0 6-2 8M27 34c0 3 0 6 2 8M15 36c-4 1-6-1-8-3" />
+                <circle cx="17" cy="22" r="1.6" />
+                <circle cx="27" cy="22" r="1.6" />
+                <path d="M20 27c1 1 3 1 4 0" />
+              </svg></span>
+            <span class="doodle-label hand">GitHub</span>
+          </a>
+          <a class="doodle-link" href="https://www.linkedin.com/in/kishore-kaarthik-487853257" target="_blank"
+            rel="noopener">
+            <span class="doodle-icon" aria-hidden="true"><svg viewBox="0 0 44 44">
+                <path d="M9 6h26c2 0 3 1 3 3v26c0 2-1 3-3 3H9c-2 0-3-1-3-3V9c0-2 1-3 3-3z" />
+                <path d="M14 19v13M14 13.5v.5M20 32V20M20 25c0-3 2-5 5-5s5 2 5 5v7" />
+              </svg></span>
+            <span class="doodle-label hand">LinkedIn</span>
+          </a>
+        </div>
+        <a class="wave-signoff" href="#contact" data-mail-user="skishorekaarthik" data-mail-domain="gmail.com"
+          data-mail-subject="Let&rsquo;s connect &mdash; from your portfolio"
+          data-mail-body="Hi Kishore,&#10;&#10;I came across your portfolio and would love to connect. Are you free for a quick chat this week?&#10;&#10;Thanks!"
+          hidden>
+          <span class="wave-bubble hand">Let&rsquo;s connect! <span aria-hidden="true">✉️</span></span>
+          <span class="wave-face" aria-hidden="true"><img alt="" width="84" height="84"><svg class="wave-hand"
+              viewBox="0 0 40 44">
+              <path
+                d="M9 31c-2-6 0-11 2-14l3 6V8a2 2 0 0 1 4 0v11V6a2 2 0 0 1 4 0v13V8a2 2 0 0 1 4 0v12l3-5a2 2 0 0 1 3 2l-4 10c-2 6-7 9-12 9-5 0-8-3-10-5z" />
+              <path d="M2 10c-1 3-1 6 0 9M35 4c2 2 3 4 3 7" />
+            </svg></span>
+        </a>
       </section>
     </main>
 
