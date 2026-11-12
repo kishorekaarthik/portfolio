@@ -617,3 +617,107 @@
     display: none
   }
 }
+
+/* ---------- desktop: slim top bar instead of the fixed sidebar ----------
+   KK stays top-left; availability, Say hello and the theme toggle sit top-right.
+   The desk is the menu on the home page, and each sheet's bar carries the section links. */
+
+@media (min-width: 901px) {
+  .desk-mode {
+    --bar-h: 72px
+  }
+
+  .desk-mode header.sidebar {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: auto;
+    width: auto;
+    height: var(--bar-h);
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1.1rem;
+    padding: 0 2rem;
+    border-right: 0;
+    background: transparent
+  }
+
+  .desk-mode .sidebar-top {
+    display: contents
+  }
+
+  .desk-mode header.sidebar .logo {
+    order: 0;
+    margin-right: auto
+  }
+
+  .desk-mode header.sidebar .sidebar-bottom {
+    order: 1;
+    flex-direction: row;
+    align-items: center
+  }
+
+  .desk-mode header.sidebar .social-icons {
+    display: none
+  }
+
+  .desk-mode header.sidebar nav {
+    order: 2;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.1rem
+  }
+
+  .desk-mode header.sidebar nav a:not(.btn) {
+    display: none
+  }
+
+  .desk-mode header.sidebar nav .btn {
+    padding: .4rem 1.1rem
+  }
+
+  .desk-mode .wrapper {
+    margin-left: 0;
+    width: 100%
+  }
+
+  .desk-mode .hero {
+    padding-top: calc(var(--bar-h) + .25rem)
+  }
+
+  .desk-mode section.s.is-open {
+    top: var(--bar-h);
+    left: 1.5rem;
+    right: 1.5rem
+  }
+
+  .desk-mode .sheet-bar .sheet-nav {
+    display: flex;
+    gap: 1.4rem;
+    flex-direction: row;
+    align-items: center;
+    margin-left: .75rem
+  }
+
+  .desk-mode .sheet-nav a {
+    font-size: 1rem;
+    color: var(--mute);
+    text-decoration: none;
+    white-space: nowrap
+  }
+
+  .desk-mode .sheet-nav a:hover {
+    color: var(--ink)
+  }
+
+  .desk-mode .sheet-nav a[aria-current="page"] {
+    color: var(--ink);
+    font-weight: 600;
+    border-bottom: 2px solid var(--ink)
+  }
+
+  .desk-mode .welcome-note {
+    top: calc(var(--bar-h) + .5rem)
+  }
+}
