@@ -330,4 +330,28 @@
   root.dataset.deskState = 'desk';
   render(idFromHash(), { animate: false });
   window.scrollTo(0, 0);
+
+  // ---------- the lamp on the desk switches the theme ----------
+
+  var lamp = desk.querySelector('.desk-lamp');
+  if (lamp) {
+    lamp.addEventListener('click', function () {
+      var mainToggle = document.getElementById('tg');
+      if (mainToggle) mainToggle.click();
+    });
+  }
+
+  // ---------- the desk sketches itself in on first load ----------
+  // pathLength=1 lets one dash cover any path; it is removed afterwards so
+  // dashed doodles (e.g. the red string on the corkboard) keep their dashes.
+
+  if (!current && !reduceMotion.matches) {
+    var strokes = desk.querySelectorAll('svg path, svg circle');
+    strokes.forEach(function (el) { el.setAttribute('pathLength', '1'); });
+    desk.classList.add('sketching');
+    setTimeout(function () {
+      desk.classList.remove('sketching');
+      strokes.forEach(function (el) { el.removeAttribute('pathLength'); });
+    }, 1500);
+  }
 })();

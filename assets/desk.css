@@ -721,3 +721,277 @@
     top: calc(var(--bar-h) + .5rem)
   }
 }
+
+/* ---------- the desk as a room: table, lamp, hover moments, labels on objects, props, shelf ---------- */
+
+.desk-mode {
+  --desk-leaf: #BFE3C0
+}
+
+.desk-mode[data-theme="dark"] {
+  --desk-leaf: #2E4A33
+}
+
+.desk .f-leaf { fill: var(--desk-leaf) }
+.desk .f-yellow, .desk-shelf .f-yellow { fill: var(--desk-yellow) }
+
+/* table, lamp, hint, props and shelf only appear in the desktop room */
+.desk-table,
+.desk-lamp,
+.desk-hint,
+.desk-props,
+.desk-shelf {
+  display: none
+}
+
+/* 6 · hover moments (all sizes) */
+.desk-type {
+  font: 600 13px ui-monospace, SFMono-Regular, Menlo, monospace;
+  fill: var(--desk-code);
+  stroke: none;
+  opacity: 0;
+  transition: opacity .2s
+}
+
+.obj-laptop:hover .desk-type,
+.obj-laptop:focus-visible .desk-type {
+  opacity: 1
+}
+
+.desk-page {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: 0% 50%;
+  transition: transform .45s ease, opacity .2s
+}
+
+.obj-notebook:hover .desk-page,
+.obj-notebook:focus-visible .desk-page {
+  opacity: 1;
+  transform: skewY(-7deg) scaleX(.55)
+}
+
+.desk-lid {
+  transform-box: fill-box;
+  transform-origin: 0% 100%;
+  transition: transform .35s ease
+}
+
+.obj-toolbox:hover .desk-lid,
+.obj-toolbox:focus-visible .desk-lid {
+  transform: rotate(-16deg)
+}
+
+.obj-mug:hover .desk-steam,
+.obj-mug:focus-visible .desk-steam {
+  animation: none;
+  opacity: .9;
+  transform: translateY(-10px);
+  transition: transform .4s, opacity .4s
+}
+
+.desk-pin {
+  transform-box: fill-box;
+  transform-origin: 50% 0%
+}
+
+.obj-board:hover .desk-pin,
+.obj-board:focus-visible .desk-pin {
+  animation: deskWig .6s ease-in-out
+}
+
+/* 5 · sketch-in on first load (desk.js adds .sketching and pathLength=1) */
+.desk.sketching svg path,
+.desk.sketching svg circle {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  fill-opacity: 0;
+  animation: deskDraw 1.1s ease forwards, deskFill .45s .85s ease forwards
+}
+
+.desk.sketching .desk-label,
+.desk.sketching .desk-hint {
+  opacity: 0
+}
+
+@keyframes deskDraw { to { stroke-dashoffset: 0 } }
+@keyframes deskFill { to { fill-opacity: 1 } }
+
+@media (min-width: 901px) {
+  .desk-mode main {
+    position: relative
+  }
+
+  /* 1 · the table */
+  .desk-mode .desk {
+    padding-bottom: 100px
+  }
+
+  .desk-mode .desk-table {
+    display: block;
+    position: absolute;
+    left: -4%;
+    right: -4%;
+    bottom: 0;
+    width: 108%;
+    height: 110px;
+    pointer-events: none
+  }
+
+  .desk-table path {
+    vector-effect: non-scaling-stroke
+  }
+
+  .desk-mode .desk-obj::after {
+    content: '';
+    position: absolute;
+    left: 14%;
+    right: 14%;
+    bottom: 1px;
+    height: 8px;
+    background: repeating-linear-gradient(135deg, color-mix(in srgb, var(--ink) 40%, transparent) 0 1.2px, transparent 1.2px 6px);
+    pointer-events: none;
+    z-index: -1
+  }
+
+  .desk-mode .obj-board::after {
+    display: none
+  }
+
+  /* 9 · labels live on the objects */
+  .desk-mode .desk-label {
+    position: absolute;
+    margin: 0;
+    padding: .05rem .55rem;
+    font-size: 1.15rem;
+    line-height: 1.3;
+    color: var(--ink);
+    background: var(--card);
+    border: 1.5px solid var(--ink);
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+    box-shadow: 2px 2px 0 var(--ink);
+    white-space: nowrap;
+    pointer-events: none
+  }
+
+  .desk-mode .obj-notebook .desk-label { top: 30%; left: 24%; transform: rotate(-7deg) }
+  .desk-mode .obj-toolbox .desk-label { bottom: 22%; left: 40%; transform: rotate(-2deg) }
+  .desk-mode .obj-board .desk-label { bottom: 14%; left: 50%; transform: translateX(-50%) rotate(-2deg) }
+  .desk-mode .obj-mug .desk-label { top: 44%; left: 56%; transform: rotate(-6deg) }
+  .desk-mode .obj-laptop .desk-label {
+    top: 0;
+    right: 6%;
+    color: #1A1A1A;
+    background: #FFF3A6;
+    border-color: #1A1A1A;
+    border-radius: 2px;
+    box-shadow: 2px 2px 0 rgba(0, 0, 0, .25);
+    transform: rotate(6deg)
+  }
+
+  /* 4 · the lamp = theme switch */
+  .desk-mode .desk-lamp {
+    display: block;
+    position: absolute;
+    right: -78px;
+    bottom: 98px;
+    width: 104px;
+    padding: 0;
+    color: var(--ink);
+    background: none;
+    border: 0;
+    cursor: pointer
+  }
+
+  .desk-lamp svg {
+    display: block;
+    overflow: visible;
+    width: 100%;
+    height: auto;
+    transform-origin: 50% 100%
+  }
+
+  .desk-lamp:hover svg,
+  .desk-lamp:focus-visible svg {
+    animation: deskWig .55s ease-in-out
+  }
+
+  .desk-lamp:focus-visible {
+    outline: 2.5px dashed var(--ink);
+    outline-offset: 4px
+  }
+
+  .lamp-cone {
+    fill: #FFE8A3;
+    stroke: none;
+    opacity: 0;
+    transition: opacity .35s
+  }
+
+  .desk-mode[data-theme="dark"] .lamp-cone {
+    opacity: .28
+  }
+
+  /* 8 · first-timer hint */
+  .desk-mode .desk-hint {
+    display: block;
+    position: absolute;
+    left: 67%;
+    top: 30%;
+    font-size: 1.45rem;
+    color: var(--mute);
+    transform: rotate(-5deg);
+    pointer-events: none
+  }
+
+  /* 10 · props on the table */
+  .desk-mode .desk-props {
+    display: block;
+    position: absolute;
+    inset: 0;
+    pointer-events: none
+  }
+
+  .desk-props .prop {
+    position: absolute;
+    bottom: 100px;
+    height: auto
+  }
+
+  .desk-props .prop-plant { left: -5%; width: 50px }
+  .desk-props .prop-pot { left: 21.2%; width: 26px }
+  .desk-props .prop-ball { left: 95.4%; width: 26px; bottom: 101px }
+
+  .desk-props svg,
+  .desk-lamp svg,
+  .desk-shelf {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.4;
+    stroke-linecap: round;
+    stroke-linejoin: round
+  }
+
+  .desk-props .f-paper,
+  .desk-lamp .f-paper,
+  .desk-shelf .f-paper { fill: var(--desk-paper) }
+  .desk-shelf .f-blue { fill: var(--desk-blue) }
+  .desk-shelf .f-pink { fill: var(--desk-pink) }
+  .desk-shelf .f-cork { fill: var(--desk-cork) }
+  .desk-props .f-leaf,
+  .desk-shelf .f-leaf { fill: var(--desk-leaf) }
+  .desk-props .thin { stroke-width: 1.6; opacity: .55 }
+}
+
+/* 11 · bookshelf on wide screens only */
+@media (min-width: 1500px) {
+  .desk-mode .desk-shelf {
+    display: block;
+    position: absolute;
+    right: 3rem;
+    top: 150px;
+    width: 104px;
+    height: auto;
+    color: var(--ink)
+  }
+}

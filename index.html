@@ -2017,9 +2017,10 @@
       </div>
 
       <nav class="desk" aria-label="Desk" hidden>
-        <svg class="desk-surface" viewBox="0 0 1000 24" preserveAspectRatio="none" aria-hidden="true">
-          <path d="M6 14C180 8 420 17 610 11S880 9 994 15" />
-          <path class="desk-shade" d="M40 20h120M300 21h90M620 20h150M860 21h70" />
+        <svg class="desk-table" viewBox="0 0 1000 110" preserveAspectRatio="none" aria-hidden="true">
+          <path class="desk-top f-paper" d="M4 8C300 4 700 10 996 6l-3 18C700 28 300 24 7 26z" />
+          <path class="desk-leg" d="M44 26l-8 82M62 26l3 82" />
+          <path class="desk-leg" d="M938 26l-3 82M956 26l8 82" />
         </svg>
 
         <a class="desk-obj obj-notebook" href="#about" data-target="about">
@@ -2028,6 +2029,7 @@
               <path class="f-yellow" d="M22 16L110 12l3 92-89 4z" />
               <path class="thin" d="M38 40h58M38 54h52M38 68h56M38 82h40" />
               <path class="f-pink" d="M88 12v26l7-6 7 6V12" />
+              <path class="desk-page f-paper" d="M30 18l76-3 3 84-78 3z" />
               <g class="rings">
                 <path
                   d="M16 26a6 6 0 0 1 12 0M16 44a6 6 0 0 1 12 0M16 62a6 6 0 0 1 12 0M16 80a6 6 0 0 1 12 0M16 98a6 6 0 0 1 12 0" />
@@ -2042,9 +2044,11 @@
           <svg viewBox="0 0 160 120" aria-hidden="true">
             <path class="f-ink-soft" d="M104 30l26-22 8 8-22 26" />
             <circle cx="135" cy="11" r="7" class="f-paper" />
-            <path d="M54 42c0-16 52-16 52 0" />
-            <path class="f-blue" d="M16 42l128-2 2 70-130 2z" />
-            <path d="M17 62l127-2" />
+            <path class="f-blue" d="M17 62l127-2 2 50-130 2z" />
+            <g class="desk-lid">
+              <path d="M54 42c0-16 52-16 52 0" />
+              <path class="f-blue" d="M16 42l128-2 1 20-128 2z" />
+            </g>
             <path class="f-paper" d="M70 54h20v14H70z" />
             <path class="thin" d="M30 82h30M30 94h44M100 84h28" />
           </svg>
@@ -2057,11 +2061,11 @@
             <circle class="f-ink" cx="120" cy="5" r="3.5" />
             <path class="f-cork" d="M14 22L226 19 229 140 11 143z" />
             <path d="M22 30L218 28 220 132 20 134z" class="thin" />
-            <g transform="rotate(-6 66 76)">
+            <g class="desk-pin"><g transform="rotate(-6 66 76)">
               <path class="f-paper" d="M34 44h66v52H34z" />
               <path class="thin" d="M44 58h46M44 68h38M44 78h42" />
               <path class="f-yellow" d="M58 84l9-7 9 7-3-10 8-6h-10l-4-10-4 10h-10l8 6z" />
-            </g>
+            </g></g>
             <g transform="rotate(5 150 78)">
               <path class="f-paper" d="M116 46h70v54h-70z" />
               <path class="thin" d="M126 60h50M126 70h40M126 80h46" />
@@ -2080,7 +2084,8 @@
             <path class="f-paper" d="M36 12L204 9l3 112-174 3z" />
             <path class="f-screen" d="M48 23l144-2 2 88-148 2z" />
             <path class="desk-code" d="M62 44l12 9-12 9M84 64h22" />
-            <path class="desk-code thin" d="M62 80h80M62 92h56" />
+            <path class="desk-code thin" d="M62 80h80" />
+            <text class="desk-type" x="62" y="101">&gt; whoami</text>
             <path class="f-blue" d="M14 126l212-3 10 16c1 3-1 5-4 5H8c-3 0-5-2-4-5z" />
             <path class="thin" d="M100 133h40" />
           </svg>
@@ -2096,7 +2101,47 @@
           </svg>
           <span class="desk-label hand">Say hello</span>
         </a>
+
+        <button class="desk-lamp" type="button" aria-label="Switch between light and dark mode">
+          <svg viewBox="0 0 120 150" aria-hidden="true">
+            <path class="lamp-cone" d="M84 50L-70 148h120z" />
+            <path class="f-paper" d="M36 146c0-9 52-9 52 0z" />
+            <path d="M62 140l-12-74 38-30" />
+            <circle class="f-paper" cx="50" cy="66" r="4" />
+            <path class="f-paper" d="M80 22l36 14-12 26-34-16z" />
+          </svg>
+        </button>
+
+        <span class="desk-hint hand" aria-hidden="true">pick something &darr;</span>
+
+        <div class="desk-props" aria-hidden="true">
+          <svg class="prop prop-plant" viewBox="0 0 60 80">
+            <path class="f-paper" d="M14 78l4-30h24l4 30z" />
+            <path class="f-leaf" d="M30 48c-4-18-20-24-26-20 4 12 14 18 26 20zM30 48c2-24 16-30 24-26-2 12-12 22-24 26zM30 48c-2-12-4-26 0-36 4 10 4 24 0 36z" />
+          </svg>
+          <svg class="prop prop-pot" viewBox="0 0 40 70">
+            <path d="M14 36l-4-30M20 36l2-32M26 36l6-28" />
+            <path class="f-paper" d="M8 68l2-32h20l2 32z" />
+          </svg>
+          <svg class="prop prop-ball" viewBox="0 0 40 34">
+            <path class="f-paper" d="M18 32c-12 0-16-12-8-18 2-10 16-10 18-2 8 6 2 20-10 20z" />
+            <path class="thin" d="M14 18l8 4M20 12l2 10" />
+          </svg>
+        </div>
       </nav>
+
+      <svg class="desk-shelf" viewBox="0 0 110 360" aria-hidden="true">
+        <path d="M6 4v352M104 4v352M6 120h98M6 238h98M6 354h98" />
+        <path class="f-yellow" d="M14 120V60h16v60z" />
+        <path class="f-blue" d="M32 120V48h14v72z" />
+        <path class="f-paper" d="M48 120l10-56 13 3-10 53z" />
+        <path class="f-pink" d="M16 238v-52h20v52z" />
+        <path class="f-paper" d="M40 238v-64h12v64z" />
+        <path class="f-cork" d="M58 238v-44h26v44z" />
+        <path class="f-blue" d="M14 354v-48h26v48z" />
+        <path class="f-paper" d="M46 354v-60h14v60z" />
+        <path class="f-leaf" d="M80 354c-10-4-14-18-6-26 6 8 10 18 6 26zM80 354c8-6 14-18 8-28-8 6-12 16-8 28z" />
+      </svg>
 
       <section class="s" id="about">
         <div class="sd a-tw" style="top:4rem;right:3%;width:40px" aria-hidden="true"><svg viewBox="0 0 40 40">
