@@ -80,4 +80,43 @@
     }
   }
 
+  // Returning-visitor note: counts visits (one per browser session) in localStorage.
+  var wb = document.querySelector('.welcome-note');
+  if (wb) {
+    var vk = 'kk-visits', visits = 0;
+    try {
+      visits = parseInt(localStorage.getItem(vk), 10) || 0;
+      if (!sessionStorage.getItem(vk)) {
+        visits += 1;
+        localStorage.setItem(vk, String(visits));
+        sessionStorage.setItem(vk, '1');
+      }
+    } catch (e) { visits = 0; }
+    if (visits >= 2) {
+      var wbMsg = wb.querySelector('.welcome-msg');
+      var hideWb = function () {
+        if (wb.hidden) return;
+        wb.classList.add('welcome-out');
+        setTimeout(function () { wb.hidden = true; }, 260);
+      };
+      if (visits === 2) {
+        wbMsg.textContent = 'Welcome back! Visit #2. Are you a recruiter or just a fan of canteen coffee?';
+      } else if (visits === 3) {
+        wbMsg.textContent = 'Visit #3. Okay, this is becoming a habit. Same time tomorrow?';
+      } else {
+        wbMsg.textContent = 'Visit #' + visits + '. You\u2019re officially a regular. ';
+        var hello = document.createElement('a');
+        hello.href = '#contact';
+        hello.textContent = 'Just say hello \u2192';
+        hello.addEventListener('click', hideWb);
+        wbMsg.appendChild(hello);
+      }
+      wb.querySelector('.welcome-close').addEventListener('click', hideWb);
+      setTimeout(function () {
+        wb.hidden = false;
+        setTimeout(hideWb, 8000);
+      }, 900);
+    }
+  }
+
 })();
