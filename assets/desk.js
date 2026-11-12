@@ -42,6 +42,41 @@
 
   // ---------- sheet chrome ----------
 
+  // ---------- floating doodles in each sheet's margins ----------
+
+  var DOODLES = [
+    { d: 'M18 4c1 8 4 12 12 14-8 2-11 6-12 14-1-8-4-12-12-14 8-2 11-6 12-14z', vb: '0 0 40 40', anim: 'a-tw' },
+    { d: 'M7 20h24v12a9 9 0 01-9 9h-6a9 9 0 01-9-9zM31 23h3a5 5 0 010 10h-3M14 4c-3 4 3 5 0 9M23 3c-3 4 3 5 0 10', vb: '0 0 44 48', anim: 'a-float' },
+    { d: 'M20 33C6 23 3 15 7 9c4-5 11-3 13 2 2-5 9-7 13-2 4 6 1 14-13 24z', vb: '0 0 40 36', anim: 'a-beat' },
+    { d: 'M24 4l18 6v16c0 12-8 19-18 22C14 45 6 38 6 26V10zM15 26l7 7 12-14', vb: '0 0 48 52', anim: 'a-float' },
+    { d: 'M20 20l18 18M31 31l5-5M26 26l4-4M22 14a8 8 0 1 1-16 0 8 8 0 0 1 16 0z', vb: '0 0 44 44', anim: 'a-float' },
+    { d: 'M15 6c-5 0-6 2-6 6v6c0 3-2 4-4 4 2 0 4 1 4 4v6c0 4 1 6 6 6M29 6c5 0 6 2 6 6v6c0 3 2 4 4 4-2 0-4 1-4 4v6c0 4-1 6-6 6', vb: '0 0 44 44', anim: 'a-tw' },
+    { d: 'M22 9v22M13 14l-7-5M13 21H5M14 28l-7 5M31 14l7-5M31 21h8M30 28l7 5M31 20a9 11 0 1 1-18 0 9 11 0 0 1 18 0z', vb: '0 0 44 36', anim: 'a-float' }
+  ];
+  var SLOTS = [['l', 22], ['r', 30], ['l', 50], ['r', 60], ['l', 78], ['r', 86]];
+  var SVGNS = 'http://www.w3.org/2000/svg';
+
+  function buildDoodles(offset) {
+    var layer = make('div', 'sheet-doodles');
+    layer.setAttribute('aria-hidden', 'true');
+    SLOTS.forEach(function (slot, i) {
+      var spec = DOODLES[(i + offset) % DOODLES.length];
+      // The twinkle grows past the sheet's right edge, so the right margin only floats.
+      var anim = slot[0] === 'r' && spec.anim === 'a-tw' ? 'a-float' : spec.anim;
+      var wrap = make('div', 'sheet-doodle ' + slot[0] + ' ' + anim);
+      wrap.style.top = slot[1] + 'vh';
+      wrap.style.animationDelay = (-i * 0.7) + 's';
+      var svg = document.createElementNS(SVGNS, 'svg');
+      svg.setAttribute('viewBox', spec.vb);
+      var path = document.createElementNS(SVGNS, 'path');
+      path.setAttribute('d', spec.d);
+      svg.appendChild(path);
+      wrap.appendChild(svg);
+      layer.appendChild(wrap);
+    });
+    return layer;
+  }
+
   function buildChrome(s) {
     var sec = s.el;
     var h2 = sec.querySelector('h2');
@@ -74,6 +109,7 @@
     bar.appendChild(tg);
 
     sec.insertBefore(bar, sec.firstChild);
+    sec.insertBefore(buildDoodles(s.index), bar);
 
     var pn = make('nav', 'sheet-pn hand');
     pn.setAttribute('aria-label', 'Previous and next section');
