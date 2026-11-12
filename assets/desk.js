@@ -88,9 +88,22 @@
     sec.setAttribute('role', 'region');
 
     var bar = make('div', 'sheet-bar');
-    var close = make('button', 'sheet-close hand', '✕ back to desk');
+    // Phones show the short "✕ desk" (the long part is hidden by CSS); the label keeps the full name.
+    var close = make('button', 'sheet-close hand', '✕ ');
+    var longPart = make('span', 'sheet-close-long', 'back to ');
+    close.appendChild(longPart);
+    close.appendChild(document.createTextNode('desk'));
+    close.setAttribute('aria-label', 'Back to desk');
     close.type = 'button';
     bar.appendChild(close);
+
+    // Phones: the sidebar (and its "Available for work" badge) is hidden, so repeat it here.
+    var status = make('p', 'status sheet-status');
+    var dot = make('b');
+    dot.setAttribute('aria-hidden', 'true');
+    status.appendChild(dot);
+    status.appendChild(document.createTextNode('Available for work'));
+    bar.appendChild(status);
 
     var nav = make('nav', 'sheet-nav');
     nav.setAttribute('aria-label', 'Sections');

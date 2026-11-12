@@ -220,6 +220,22 @@
       width: fit-content
     }
 
+    p.status {
+      margin: 0
+    }
+
+    /* The hero copy of the badge is for phones, where the sidebar's copy is hidden. */
+    .hero-status {
+      display: none !important
+    }
+
+    @media (max-width: 900px) {
+      .hero-status {
+        display: flex !important;
+        margin: 1.1rem auto 0
+      }
+    }
+
     .status b {
       width: 8px;
       height: 8px;
@@ -1622,6 +1638,7 @@
       </nav>
     </div>
     <div class="sidebar-bottom">
+      <p class="status"><b aria-hidden="true"></b>Available for work</p>
       <div class="social-icons">
         <a href="https://www.linkedin.com/in/kishore-kaarthik-487853257" target="_blank" rel="noopener"
           aria-label="LinkedIn">
@@ -1719,6 +1736,7 @@
             </svg></span> Engineer</p>
         <p class="quote hand">&ldquo;I write clean code for humans and guard the data. Because
           ‘password123’ isn’t going to defend itself.&rdquo;</p>
+        <p class="status hero-status"><b aria-hidden="true"></b>Available for work</p>
       </div>
 
       <nav class="desk" aria-label="Desk" hidden>
@@ -1844,10 +1862,13 @@
                   <li>Deep learning models that developed full-blown identity crises and refused to classify anything
                     correctly until I apologized to them</li>
                 </ul>
-                <p>Coming up next: <strong>SAP at Accenture</strong> by day &mdash; turning enterprise chaos into clean,
-                  shiny workflows like a digital Marie Kondo. By night? I poke at cybersecurity vulnerabilities (purely
-                  for science, officer), tinker with neural nets that occasionally gaslight me, and pair-program with
-                  Claude Code and Google Antigravity like they&rsquo;re my chaotic co-founders.</p>
+                <p>Coming up next: <strong>honestly, that&rsquo;s where you come in.</strong> I&rsquo;m officially
+                  <strong>open to work</strong> and deep in my corporate waiting-room arc &mdash; refreshing my inbox
+                  like it owes me money, rehearsing &ldquo;tell me about yourself&rdquo; in the shower, and ironing the
+                  same formal shirt for an onboarding day that hasn&rsquo;t been scheduled yet. Meanwhile I poke at
+                  cybersecurity vulnerabilities (purely for science, officer), tinker with neural nets that occasionally
+                  gaslight me, and pair-program with Claude Code and Google Antigravity like they&rsquo;re my chaotic
+                  co-founders.</p>
                 <p><strong>Rule #1</strong> (non-negotiable, carved into the codebase of my soul): I read and verify
                   every. single. line. before it ships. No exceptions. Not even if the AI looks really confident about
                   it.</p>
@@ -1858,9 +1879,9 @@
               <div class="story-pane" id="pane-corporate" role="tabpanel" hidden>
                 <p>Computer Science Engineer from <strong>Rajalakshmi Engineering College</strong> with a clear upward
                   trajectory (that +13% jump between 10th and 12th wasn&rsquo;t an accident).</p>
-                <p>Soon joining <strong>Accenture</strong> as an Enterprise Solutions Strategist, where I&rsquo;ll be
-                  helping teams turn complex SAP cloud architectures and ERP systems into something that actually works
-                  for people instead of against them.</p>
+                <p>Currently <strong>available for full-time roles</strong> in software engineering and
+                  cybersecurity. I&rsquo;m at my best where secure-by-design engineering meets real systems: backend
+                  services, cloud, and anything that handles data people actually care about.</p>
                 <p>I spend a good chunk of my time pair-programming with tools like Claude Code and Google Antigravity
                   &mdash; treating them as sharp collaborators rather than magic wands. The rule is simple:
                   human-in-the-loop, every line reviewed, zero-trust by default. Speed is great. Blind speed is how
@@ -1880,12 +1901,13 @@
             <div class="edu-timeline">
               <div class="edu-card wob">
                 <div class="edu-header">
-                  <span class="edu-year hand">2026 &bull; Upcoming</span>
-                  <span class="score-badge accent">Enterprise</span>
+                  <span class="edu-year hand">2026 &bull; Right now</span>
+                  <span class="score-badge accent">Open to work</span>
                 </div>
-                <div class="edu-school">Accenture</div>
-                <div class="edu-degree">Associate Software Engineer &bull; SAP</div>
-                <p class="edu-desc">Taming enterprise workflows, procurement pipelines, and S/4HANA cloud modules.</p>
+                <div class="edu-school">Next chapter: loading&hellip;</div>
+                <div class="edu-degree">Software &amp; Cybersecurity roles &bull; full-time</div>
+                <p class="edu-desc">Currently in the corporate waiting room: laptop charged, lanyard-ready, practising
+                  my &ldquo;first day at the office&rdquo; handshake. Your company logo would look great right here.</p>
               </div>
 
               <div class="edu-card wob">
