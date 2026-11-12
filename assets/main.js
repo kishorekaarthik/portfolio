@@ -72,13 +72,9 @@
     });
   });
 
-  // Waving sign-off on Say hello: reuse the hero avatar (no second copy of the image in the HTML).
+  // Paper-plane sign-off on Say hello: only useful once the pre-filled mailto link is built above.
   var signoff = document.querySelector('.wave-signoff');
-  var heroAvatar = document.querySelector('.hero .avatar');
-  if (signoff && heroAvatar) {
-    signoff.querySelector('img').src = heroAvatar.src;
-    signoff.hidden = false;
-  }
+  if (signoff) signoff.hidden = false;
   // Joke cookie note: shown once per visitor, then remembered (localStorage, not a cookie).
   var note = document.querySelector('.cookie-note');
   if (note) {

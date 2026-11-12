@@ -1445,6 +1445,7 @@
         stroke-dashoffset: 0
       }
     }
+
     /* Joke cookie note (shown once per visitor by assets/main.js) */
     .cookie-note {
       position: fixed;
@@ -1503,12 +1504,22 @@
     }
 
     @keyframes cookieIn {
-      from { opacity: 0; transform: translateY(16px) rotate(-1deg) }
-      to { opacity: 1; transform: rotate(-1deg) }
+      from {
+        opacity: 0;
+        transform: translateY(16px) rotate(-1deg)
+      }
+
+      to {
+        opacity: 1;
+        transform: rotate(-1deg)
+      }
     }
 
     @keyframes cookieOut {
-      to { opacity: 0; transform: translateY(16px) rotate(-1deg) }
+      to {
+        opacity: 0;
+        transform: translateY(16px) rotate(-1deg)
+      }
     }
 
     @media (max-width: 900px) {
@@ -1595,12 +1606,22 @@
     }
 
     @keyframes welcomeIn {
-      from { opacity: 0; transform: translateY(-14px) rotate(1.2deg) }
-      to { opacity: 1; transform: rotate(1.2deg) }
+      from {
+        opacity: 0;
+        transform: translateY(-14px) rotate(1.2deg)
+      }
+
+      to {
+        opacity: 1;
+        transform: rotate(1.2deg)
+      }
     }
 
     @keyframes welcomeOut {
-      to { opacity: 0; transform: translateY(-14px) rotate(1.2deg) }
+      to {
+        opacity: 0;
+        transform: translateY(-14px) rotate(1.2deg)
+      }
     }
 
     @media (max-width: 900px) {
@@ -1690,7 +1711,7 @@
       cursor: pointer
     }
 
-    .todo-item + .tag {
+    .todo-item+.tag {
       cursor: default
     }
 
@@ -1755,10 +1776,23 @@
     }
 
     @keyframes linkWig {
-      0%, 100% { transform: rotate(0) }
-      25% { transform: rotate(-6deg) }
-      50% { transform: rotate(5deg) }
-      75% { transform: rotate(-3deg) }
+
+      0%,
+      100% {
+        transform: rotate(0)
+      }
+
+      25% {
+        transform: rotate(-6deg)
+      }
+
+      50% {
+        transform: rotate(5deg)
+      }
+
+      75% {
+        transform: rotate(-3deg)
+      }
     }
 
     .wave-signoff {
@@ -1768,13 +1802,6 @@
       margin-top: 2.25rem;
       color: var(--ink);
       text-decoration: none
-    }
-
-    @keyframes handWave {
-      0%, 60%, 100% { transform: rotate(0) }
-      10%, 30% { transform: rotate(18deg) }
-      20%, 40% { transform: rotate(-10deg) }
-      50% { transform: rotate(8deg) }
     }
 
     .wave-signoff[hidden] {
@@ -1797,34 +1824,42 @@
       transform: translateY(-3px) rotate(-2deg)
     }
 
-    .wave-face {
-      position: relative;
+    .wave-plane {
       display: block;
-      width: 84px;
-      height: 84px
-    }
-
-    .wave-face img {
-      width: 84px;
-      height: 84px;
-      border-radius: 50%;
-      border: 2.5px solid var(--ink);
-      background: #F5F3EE;
-      object-fit: cover
-    }
-
-    .wave-hand {
-      position: absolute;
-      right: -18px;
-      top: -6px;
-      width: 34px;
-      fill: var(--card);
+      width: 120px;
+      fill: none;
       stroke: var(--ink);
       stroke-width: 2.2;
       stroke-linecap: round;
       stroke-linejoin: round;
-      transform-origin: 40% 90%;
-      animation: handWave 1.8s ease-in-out infinite
+      overflow: visible;
+      animation: planeDrift 3.2s ease-in-out infinite
+    }
+
+    .wave-plane path:not(.wave-trail) {
+      fill: var(--card)
+    }
+
+    .wave-trail {
+      stroke-dasharray: 3 6;
+      color: var(--mute);
+      stroke: currentColor
+    }
+
+    .wave-signoff:hover .wave-plane,
+    .wave-signoff:focus-visible .wave-plane {
+      animation: planeFly .7s ease-in-out
+    }
+
+    @keyframes planeDrift {
+      0%, 100% { transform: translate(0, 0) rotate(0) }
+      50% { transform: translate(4px, -6px) rotate(-3deg) }
+    }
+
+    @keyframes planeFly {
+      0% { transform: translate(0, 0) rotate(0) }
+      60% { transform: translate(22px, -14px) rotate(-8deg) }
+      100% { transform: translate(0, 0) rotate(0) }
     }
 
     @media (max-width: 900px) {
@@ -1854,7 +1889,6 @@
         font-size: 1.15rem
       }
     }
-
   </style>
 </head>
 
@@ -1995,7 +2029,8 @@
               <path class="thin" d="M38 40h58M38 54h52M38 68h56M38 82h40" />
               <path class="f-pink" d="M88 12v26l7-6 7 6V12" />
               <g class="rings">
-                <path d="M16 26a6 6 0 0 1 12 0M16 44a6 6 0 0 1 12 0M16 62a6 6 0 0 1 12 0M16 80a6 6 0 0 1 12 0M16 98a6 6 0 0 1 12 0" />
+                <path
+                  d="M16 26a6 6 0 0 1 12 0M16 44a6 6 0 0 1 12 0M16 62a6 6 0 0 1 12 0M16 80a6 6 0 0 1 12 0M16 98a6 6 0 0 1 12 0" />
               </g>
             </g>
             <path class="f-ink" d="M98 92l18-26 6 4-18 26-8 3z" />
@@ -2111,7 +2146,8 @@
                   same formal shirt for an onboarding day that hasn&rsquo;t been scheduled yet. Meanwhile I poke at
                   cybersecurity vulnerabilities (purely for science, officer), tinker with neural nets that occasionally
                   gaslight me, and pair-program with Claude Code and Google Antigravity like they&rsquo;re my chaotic
-                  co-founders.</p>
+                  co-founders.
+                </p>
                 <p><strong>Rule #1</strong> (non-negotiable, carved into the codebase of my soul): I read and verify
                   every. single. line. before it ships. No exceptions. Not even if the AI looks really confident about
                   it.</p>
@@ -2393,7 +2429,8 @@
               written down in ink that can&rsquo;t be erased, and the real values only come out when a policy says so.
             </p>
             <ul class="detail-list">
-              <li><strong>Envelope encryption.</strong> Each tenant gets its own AES-256-GCM data key, wrapped by a master
+              <li><strong>Envelope encryption.</strong> Each tenant gets its own AES-256-GCM data key, wrapped by a
+                master
                 key that lives in the OS keychain. Every ciphertext is cryptographically bound to its tenant, token and
                 key version, so a value copied into the wrong place simply won&rsquo;t decrypt.</li>
               <li><strong>Tenant isolation in the database.</strong> Forced PostgreSQL row-level security plus a
@@ -2402,7 +2439,8 @@
               <li><strong>Tamper-evident audit log.</strong> A hash-chained log written in the same transaction as every
                 operation, with a verification endpoint that pinpoints exactly which entry was edited, deleted or
                 reordered. The audit table is append-only.</li>
-              <li><strong>Deny-by-default access.</strong> Per-API-key policies decide allow, mask or deny for each field
+              <li><strong>Deny-by-default access.</strong> Per-API-key policies decide allow, mask or deny for each
+                field
                 type, with scoped keys, rate limiting, and responses that never echo back what you sent.</li>
               <li><strong>DPDP rights and key rotation.</strong> Data-subject erasure and export, zero-downtime data-key
                 rotation with resumable batched re-encryption, and crash-safe master-key rotation.</li>
@@ -2427,27 +2465,44 @@
         <p class="sub hand" style="margin-bottom:0">open to work. bring coffee, bugs or job offers.</p>
         <p class="status contact-status"><b aria-hidden="true"></b>Available for work &middot; full-time software &amp;
           cybersecurity roles</p>
-        <p class="contact-meta hand"><span aria-hidden="true">📍</span> Tamil Nadu, India &middot; IST (UTC+5:30)
+        <p class="contact-meta hand">Pennadam, Tamil Nadu, India &middot; IST (UTC+5:30)
           &middot; replies faster than my code compiles</p>
         <div class="todo wob">
           <p class="todo-title">Recruiter to-do list <span class="hand">(takes 2 mins, promise)</span></p>
           <ol class="todo-list hand">
-            <li class="todo-row done"><span class="todo-item"><svg class="todo-box" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6c5-1.2 10-1 15-.3.8 4.8.9 9.6.2 14.5-5 .8-10 .9-15 .1-.9-4.8-1-9.6-.2-14.3z" /><path class="todo-tick" d="M7.5 12.5l3.8 4L21 3.5" /></svg><span class="todo-text">find a good engineer</span></span><span
-                class="tag">you&rsquo;re here</span></li>
+            <li class="todo-row done"><span class="todo-item"><svg class="todo-box" viewBox="0 0 24 24"
+                  aria-hidden="true">
+                  <path d="M4 6c5-1.2 10-1 15-.3.8 4.8.9 9.6.2 14.5-5 .8-10 .9-15 .1-.9-4.8-1-9.6-.2-14.3z" />
+                  <path class="todo-tick" d="M7.5 12.5l3.8 4L21 3.5" />
+                </svg><span class="todo-text">find a good engineer</span></span><span class="tag">you&rsquo;re
+                here</span></li>
             <li class="todo-row"><a class="todo-link resume-btn" href="assets/kishore_kaarthik_general_resume.pdf"
-                download><svg class="todo-box" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6c5-1.2 10-1 15-.3.8 4.8.9 9.6.2 14.5-5 .8-10 .9-15 .1-.9-4.8-1-9.6-.2-14.3z" /><path class="todo-tick" d="M7.5 12.5l3.8 4L21 3.5" /></svg><span class="todo-text">grab the résumé</span><span class="tag">PDF</span></a></li>
+                download><svg class="todo-box" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 6c5-1.2 10-1 15-.3.8 4.8.9 9.6.2 14.5-5 .8-10 .9-15 .1-.9-4.8-1-9.6-.2-14.3z" />
+                  <path class="todo-tick" d="M7.5 12.5l3.8 4L21 3.5" />
+                </svg><span class="todo-text">grab the résumé</span><span class="tag">PDF</span></a></li>
             <li class="todo-row"><a class="todo-link" href="https://github.com/kishorekaarthik" target="_blank"
-                rel="noopener"><svg class="todo-box" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6c5-1.2 10-1 15-.3.8 4.8.9 9.6.2 14.5-5 .8-10 .9-15 .1-.9-4.8-1-9.6-.2-14.3z" /><path class="todo-tick" d="M7.5 12.5l3.8 4L21 3.5" /></svg><span class="todo-text">peek at the code</span><span class="tag">GitHub</span></a></li>
+                rel="noopener"><svg class="todo-box" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 6c5-1.2 10-1 15-.3.8 4.8.9 9.6.2 14.5-5 .8-10 .9-15 .1-.9-4.8-1-9.6-.2-14.3z" />
+                  <path class="todo-tick" d="M7.5 12.5l3.8 4L21 3.5" />
+                </svg><span class="todo-text">peek at the code</span><span class="tag">GitHub</span></a></li>
             <li class="todo-row"><a class="todo-link" href="https://www.credly.com/users/kishore-kaarthik-s/badges"
-                target="_blank" rel="noopener"><svg class="todo-box" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6c5-1.2 10-1 15-.3.8 4.8.9 9.6.2 14.5-5 .8-10 .9-15 .1-.9-4.8-1-9.6-.2-14.3z" /><path class="todo-tick" d="M7.5 12.5l3.8 4L21 3.5" /></svg><span class="todo-text">check the receipts</span><span
-                  class="tag">Credly</span></a></li>
+                target="_blank" rel="noopener"><svg class="todo-box" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 6c5-1.2 10-1 15-.3.8 4.8.9 9.6.2 14.5-5 .8-10 .9-15 .1-.9-4.8-1-9.6-.2-14.3z" />
+                  <path class="todo-tick" d="M7.5 12.5l3.8 4L21 3.5" />
+                </svg><span class="todo-text">check the receipts</span><span class="tag">Credly</span></a></li>
             <li class="todo-row"><a class="todo-link" href="https://www.linkedin.com/in/kishore-kaarthik-487853257"
-                target="_blank" rel="noopener"><svg class="todo-box" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6c5-1.2 10-1 15-.3.8 4.8.9 9.6.2 14.5-5 .8-10 .9-15 .1-.9-4.8-1-9.6-.2-14.3z" /><path class="todo-tick" d="M7.5 12.5l3.8 4L21 3.5" /></svg><span class="todo-text">connect professionally</span><span
-                  class="tag">LinkedIn</span></a></li>
+                target="_blank" rel="noopener"><svg class="todo-box" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 6c5-1.2 10-1 15-.3.8 4.8.9 9.6.2 14.5-5 .8-10 .9-15 .1-.9-4.8-1-9.6-.2-14.3z" />
+                  <path class="todo-tick" d="M7.5 12.5l3.8 4L21 3.5" />
+                </svg><span class="todo-text">connect professionally</span><span class="tag">LinkedIn</span></a></li>
             <li class="todo-row"><a class="todo-link todo-mail" href="#contact" data-mail-user="skishorekaarthik"
                 data-mail-domain="gmail.com" data-mail-subject="Let&rsquo;s connect &mdash; from your portfolio"
-                data-mail-body="Hi Kishore,&#10;&#10;I came across your portfolio and would love to connect. Are you free for a quick chat this week?&#10;&#10;Thanks!"><svg class="todo-box" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6c5-1.2 10-1 15-.3.8 4.8.9 9.6.2 14.5-5 .8-10 .9-15 .1-.9-4.8-1-9.6-.2-14.3z" /><path class="todo-tick" d="M7.5 12.5l3.8 4L21 3.5" /></svg><span
-                  class="todo-text">say hello</span><span class="tag">email</span></a><a class="tag todo-wa"
+                data-mail-body="Hi Kishore,&#10;&#10;I came across your portfolio and would love to connect. Are you free for a quick chat this week?&#10;&#10;Thanks!"><svg
+                  class="todo-box" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 6c5-1.2 10-1 15-.3.8 4.8.9 9.6.2 14.5-5 .8-10 .9-15 .1-.9-4.8-1-9.6-.2-14.3z" />
+                  <path class="todo-tick" d="M7.5 12.5l3.8 4L21 3.5" />
+                </svg><span class="todo-text">say hello</span><span class="tag">email</span></a><a class="tag todo-wa"
                 href="https://wa.me/919952648241?text=Hi%20Kishore!%20I%20found%20your%20portfolio%20and%20wanted%20to%20say%20hello."
                 target="_blank" rel="noopener">WhatsApp</a></li>
           </ol>
@@ -2460,13 +2515,12 @@
           data-mail-subject="Let&rsquo;s connect &mdash; from your portfolio"
           data-mail-body="Hi Kishore,&#10;&#10;I came across your portfolio and would love to connect. Are you free for a quick chat this week?&#10;&#10;Thanks!"
           hidden>
-          <span class="wave-bubble hand">Let&rsquo;s connect! <span aria-hidden="true">✉️</span></span>
-          <span class="wave-face" aria-hidden="true"><img alt="" width="84" height="84"><svg class="wave-hand"
-              viewBox="0 0 40 44">
-              <path
-                d="M9 31c-2-6 0-11 2-14l3 6V8a2 2 0 0 1 4 0v11V6a2 2 0 0 1 4 0v13V8a2 2 0 0 1 4 0v12l3-5a2 2 0 0 1 3 2l-4 10c-2 6-7 9-12 9-5 0-8-3-10-5z" />
-              <path d="M2 10c-1 3-1 6 0 9M35 4c2 2 3 4 3 7" />
-            </svg></span>
+          <span class="wave-bubble hand">Let&rsquo;s connect! </span>
+          <svg class="wave-plane" viewBox="0 0 120 70" aria-hidden="true">
+            <path class="wave-trail" d="M4 62c14 2 26-4 30-14 4-11-6-17-12-10-6 8 4 18 18 16 12-2 22-10 30-18" />
+            <path d="M70 34L114 10 100 56 88 42z" />
+            <path d="M88 42L114 10M88 42l-2 14 8-9" />
+          </svg>
         </a>
       </section>
     </main>
@@ -2480,7 +2534,8 @@
   </aside>
 
   <aside class="cookie-note hand" aria-label="Cookie note" hidden>
-    <p class="cookie-msg"><span aria-hidden="true">🍪</span> <b>Cookie policy:</b> zero cookies. I just count heads, not names. Got actual cookies? Ship them to Pennadam.</p>
+    <p class="cookie-msg"><span aria-hidden="true">🍪</span> <b>Cookie policy:</b> zero cookies. I just count heads, not
+      names. Got actual cookies? Ship them to Pennadam.</p>
     <div class="cookie-actions">
       <button type="button" class="cookie-ok">Fair enough 🍪</button>
       <button type="button" class="cookie-coffee">I prefer filter coffee ☕</button>
