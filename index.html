@@ -1624,67 +1624,134 @@
       color: var(--mute)
     }
 
-    .contact-actions {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 1.75rem
+    .todo {
+      max-width: 580px;
+      margin: 1.75rem auto 0;
+      padding: 1.35rem 1.6rem 1.1rem;
+      background: var(--card);
+      text-align: left;
+      transform: rotate(-.6deg)
     }
 
-    .resume-btn {
-      font-size: 1.25rem;
-      text-decoration: none
+    .todo-title {
+      margin: 0 0 .35rem;
+      font-size: 1.55rem;
+      font-weight: 700;
+      letter-spacing: -.03em
     }
 
-    .doodle-links {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 1.25rem 1.75rem
+    .todo-title .hand {
+      font-size: 1.15rem;
+      font-weight: 400;
+      letter-spacing: 0;
+      color: var(--mute)
     }
 
-    .doodle-link {
+    .todo-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-size: 1.35rem
+    }
+
+    .todo-row {
       display: flex;
-      flex-direction: column;
       align-items: center;
-      gap: .35rem;
+      gap: .5rem;
+      padding: .45rem 0;
+      border-bottom: 1px dashed var(--faint)
+    }
+
+    .todo-row:last-child {
+      border-bottom: 0
+    }
+
+    .todo-link,
+    .todo-item {
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+      flex: 1;
       color: var(--ink);
       text-decoration: none
     }
 
-    .doodle-icon {
-      display: grid;
-      place-items: center;
-      width: 62px;
-      height: 62px;
-      border: 2px solid var(--ink);
-      border-radius: 58% 42% 55% 45% / 45% 55% 45% 55%;
-      background: var(--card);
-      box-shadow: 3px 3px 0 var(--ink);
-      transition: transform .2s
+    .todo-link .tag {
+      margin-left: auto
     }
 
-    .doodle-icon svg {
-      width: 32px;
-      height: 32px;
+    a.tag {
+      text-decoration: none;
+      color: var(--ink)
+    }
+
+    .todo .tag {
+      font-size: 1rem;
+      cursor: pointer
+    }
+
+    .todo-item + .tag {
+      cursor: default
+    }
+
+    .todo-box {
+      flex: none;
+      width: 24px;
+      height: 24px;
       fill: none;
       stroke: currentColor;
-      stroke-width: 2.4;
+      stroke-width: 2;
       stroke-linecap: round;
       stroke-linejoin: round
     }
 
-    .doodle-label {
-      font-size: 1.15rem;
-      color: var(--mute)
+    .todo-tick {
+      stroke-width: 2.6;
+      opacity: 0;
+      stroke-dasharray: 30;
+      stroke-dashoffset: 30
     }
 
-    .doodle-link:hover .doodle-icon,
-    .doodle-link:focus-visible .doodle-icon {
+    .todo-row.done .todo-tick {
+      opacity: 1;
+      stroke-dashoffset: 0;
+      transition: stroke-dashoffset .35s ease
+    }
+
+    .todo-row.done .todo-text {
+      color: var(--mute);
+      text-decoration: line-through;
+      text-decoration-thickness: 1.5px
+    }
+
+    .todo-link:hover .todo-text,
+    .todo-link:focus-visible .todo-text {
+      text-decoration: underline wavy;
+      text-underline-offset: 4px
+    }
+
+    .todo-link:hover .todo-box {
       animation: linkWig .55s ease-in-out
     }
 
-    .doodle-link:hover .doodle-label {
+    .todo-foot {
+      margin: .8rem 0 0;
+      font-size: 1.12rem;
+      color: var(--mute)
+    }
+
+    .todo-foot a {
       color: var(--ink)
+    }
+
+    .todo-foot .mail {
+      margin: 0;
+      font: inherit;
+      letter-spacing: 0;
+      border-bottom: 0;
+      text-decoration: underline;
+      display: inline-block;
+      white-space: nowrap
     }
 
     @keyframes linkWig {
@@ -1765,11 +1832,22 @@
         font-size: 1.1rem
       }
 
-      /* id selector: must beat the sheet rule that sets every block's max-width */
-      #contact .doodle-links {
-        gap: 1rem 1.25rem;
-        max-width: 290px;
-        margin: 0 auto
+      .todo {
+        padding: 1rem 1.05rem .9rem;
+        transform: none
+      }
+
+      .todo-title {
+        font-size: 1.3rem
+      }
+
+      .todo-list {
+        font-size: 1.18rem
+      }
+
+      .todo-link,
+      .todo-item {
+        gap: .5rem
       }
 
       .wave-bubble {
@@ -2351,57 +2429,32 @@
           cybersecurity roles</p>
         <p class="contact-meta hand"><span aria-hidden="true">📍</span> Tamil Nadu, India &middot; IST (UTC+5:30)
           &middot; replies faster than my code compiles</p>
-        <a class="mail" href="#contact" data-mail-user="skishorekaarthik" data-mail-domain="gmail.com">skishorekaarthik
-          [at] gmail [dot] com</a>
-        <div class="contact-actions">
-          <a class="btn wob resume-btn hand" href="assets/kishore_kaarthik_general_resume.pdf" download><span
-              aria-hidden="true">📄</span> Grab my résumé</a>
-        </div>
-        <div class="doodle-links">
-          <a class="doodle-link" href="https://github.com/kishorekaarthik" target="_blank" rel="noopener">
-            <span class="doodle-icon" aria-hidden="true"><svg viewBox="0 0 44 44">
-                <path d="M11 33c-4-4-5-10-3-15l-1-9 7 4c5-2 11-2 16 0l7-4-1 9c2 5 1 11-3 15" />
-                <path d="M17 34c0 3 0 6-2 8M27 34c0 3 0 6 2 8M15 36c-4 1-6-1-8-3" />
-                <circle cx="17" cy="22" r="1.6" />
-                <circle cx="27" cy="22" r="1.6" />
-                <path d="M20 27c1 1 3 1 4 0" />
-              </svg></span>
-            <span class="doodle-label hand">GitHub</span>
-          </a>
-          <a class="doodle-link" href="https://www.linkedin.com/in/kishore-kaarthik-487853257" target="_blank"
-            rel="noopener">
-            <span class="doodle-icon" aria-hidden="true"><svg viewBox="0 0 44 44">
-                <path d="M9 6h26c2 0 3 1 3 3v26c0 2-1 3-3 3H9c-2 0-3-1-3-3V9c0-2 1-3 3-3z" />
-                <path d="M14 19v13M14 13.5v.5M20 32V20M20 25c0-3 2-5 5-5s5 2 5 5v7" />
-              </svg></span>
-            <span class="doodle-label hand">LinkedIn</span>
-          </a>
-          <a class="doodle-link" href="https://www.credly.com/users/kishore-kaarthik-s/badges" target="_blank"
-            rel="noopener">
-            <span class="doodle-icon" aria-hidden="true"><svg viewBox="0 0 44 44">
-                <path d="M22 4a11 11 0 1 1 0 22 11 11 0 0 1 0-22z" />
-                <path d="M22 9.5l2 4 4.4.6-3.2 3.1.8 4.4-4-2.1-4 2.1.8-4.4-3.2-3.1 4.4-.6z" />
-                <path d="M16 24l-4 15 6-3 4 5 1-14M28 24l4 15-6-3-4 5" />
-              </svg></span>
-            <span class="doodle-label hand">Credly</span>
-          </a>
-          <a class="doodle-link"
-            href="https://wa.me/919952648241?text=Hi%20Kishore!%20I%20found%20your%20portfolio%20and%20wanted%20to%20say%20hello."
-            target="_blank" rel="noopener">
-            <span class="doodle-icon" aria-hidden="true"><svg viewBox="0 0 44 44">
-                <path d="M22 6c9 0 16 7 16 15s-7 15-16 15c-3 0-5-.6-7-1.6L6 37l2.6-7.6C7.5 27 7 24 7 21 7 13 13 6 22 6z" />
-                <path d="M16.5 15c-1 1.2-1 3 0 5 2 4 5 7 9 8.6 2 .8 3.2 0 4-1.2l-1-2.8-3-1-1.2 1.2c-2-1-4-3-5-5l1.2-1.2-1-3z" />
-              </svg></span>
-            <span class="doodle-label hand">WhatsApp</span>
-          </a>
-          <a class="doodle-link" href="https://www.instagram.com/_kishorekk_/" target="_blank" rel="noopener">
-            <span class="doodle-icon" aria-hidden="true"><svg viewBox="0 0 44 44">
-                <path d="M13 6h18c4 0 7 3 7 7v18c0 4-3 7-7 7H13c-4 0-7-3-7-7V13c0-4 3-7 7-7z" />
-                <path d="M22 15a7 7 0 1 1 0 14 7 7 0 0 1 0-14z" />
-                <circle cx="31" cy="12.5" r="1.6" />
-              </svg></span>
-            <span class="doodle-label hand">Instagram</span>
-          </a>
+        <div class="todo wob">
+          <p class="todo-title">Recruiter to-do list <span class="hand">(takes 2 mins, promise)</span></p>
+          <ol class="todo-list hand">
+            <li class="todo-row done"><span class="todo-item"><svg class="todo-box" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6c5-1.2 10-1 15-.3.8 4.8.9 9.6.2 14.5-5 .8-10 .9-15 .1-.9-4.8-1-9.6-.2-14.3z" /><path class="todo-tick" d="M7.5 12.5l3.8 4L21 3.5" /></svg><span class="todo-text">find a good engineer</span></span><span
+                class="tag">you&rsquo;re here</span></li>
+            <li class="todo-row"><a class="todo-link resume-btn" href="assets/kishore_kaarthik_general_resume.pdf"
+                download><svg class="todo-box" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6c5-1.2 10-1 15-.3.8 4.8.9 9.6.2 14.5-5 .8-10 .9-15 .1-.9-4.8-1-9.6-.2-14.3z" /><path class="todo-tick" d="M7.5 12.5l3.8 4L21 3.5" /></svg><span class="todo-text">grab the résumé</span><span class="tag">PDF</span></a></li>
+            <li class="todo-row"><a class="todo-link" href="https://github.com/kishorekaarthik" target="_blank"
+                rel="noopener"><svg class="todo-box" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6c5-1.2 10-1 15-.3.8 4.8.9 9.6.2 14.5-5 .8-10 .9-15 .1-.9-4.8-1-9.6-.2-14.3z" /><path class="todo-tick" d="M7.5 12.5l3.8 4L21 3.5" /></svg><span class="todo-text">peek at the code</span><span class="tag">GitHub</span></a></li>
+            <li class="todo-row"><a class="todo-link" href="https://www.credly.com/users/kishore-kaarthik-s/badges"
+                target="_blank" rel="noopener"><svg class="todo-box" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6c5-1.2 10-1 15-.3.8 4.8.9 9.6.2 14.5-5 .8-10 .9-15 .1-.9-4.8-1-9.6-.2-14.3z" /><path class="todo-tick" d="M7.5 12.5l3.8 4L21 3.5" /></svg><span class="todo-text">check the receipts</span><span
+                  class="tag">Credly</span></a></li>
+            <li class="todo-row"><a class="todo-link" href="https://www.linkedin.com/in/kishore-kaarthik-487853257"
+                target="_blank" rel="noopener"><svg class="todo-box" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6c5-1.2 10-1 15-.3.8 4.8.9 9.6.2 14.5-5 .8-10 .9-15 .1-.9-4.8-1-9.6-.2-14.3z" /><path class="todo-tick" d="M7.5 12.5l3.8 4L21 3.5" /></svg><span class="todo-text">connect professionally</span><span
+                  class="tag">LinkedIn</span></a></li>
+            <li class="todo-row"><a class="todo-link todo-mail" href="#contact" data-mail-user="skishorekaarthik"
+                data-mail-domain="gmail.com" data-mail-subject="Let&rsquo;s connect &mdash; from your portfolio"
+                data-mail-body="Hi Kishore,&#10;&#10;I came across your portfolio and would love to connect. Are you free for a quick chat this week?&#10;&#10;Thanks!"><svg class="todo-box" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6c5-1.2 10-1 15-.3.8 4.8.9 9.6.2 14.5-5 .8-10 .9-15 .1-.9-4.8-1-9.6-.2-14.3z" /><path class="todo-tick" d="M7.5 12.5l3.8 4L21 3.5" /></svg><span
+                  class="todo-text">say hello</span><span class="tag">email</span></a><a class="tag todo-wa"
+                href="https://wa.me/919952648241?text=Hi%20Kishore!%20I%20found%20your%20portfolio%20and%20wanted%20to%20say%20hello."
+                target="_blank" rel="noopener">WhatsApp</a></li>
+          </ol>
+          <p class="todo-foot hand">or just write to <a class="mail" href="#contact" data-mail-user="skishorekaarthik"
+              data-mail-domain="gmail.com">skishorekaarthik [at] gmail [dot] com</a> &middot; <a class="todo-ig"
+              href="https://www.instagram.com/_kishorekk_/" target="_blank" rel="noopener">Instagram</a> for the chill
+            stuff</p>
         </div>
         <a class="wave-signoff" href="#contact" data-mail-user="skishorekaarthik" data-mail-domain="gmail.com"
           data-mail-subject="Let&rsquo;s connect &mdash; from your portfolio"

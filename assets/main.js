@@ -64,6 +64,14 @@
     if (a.classList.contains('mail')) a.textContent = addr;
   });
 
+  // Recruiter to-do list: tick an item's box when it's clicked.
+  document.querySelectorAll('.todo-link, .todo-wa').forEach(function (a) {
+    a.addEventListener('click', function () {
+      var row = a.closest('.todo-row');
+      if (row) row.classList.add('done');
+    });
+  });
+
   // Waving sign-off on Say hello: reuse the hero avatar (no second copy of the image in the HTML).
   var signoff = document.querySelector('.wave-signoff');
   var heroAvatar = document.querySelector('.hero .avatar');
