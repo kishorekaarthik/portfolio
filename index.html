@@ -209,14 +209,13 @@
     .status {
       display: flex;
       align-items: center;
-      gap: .6rem;
-      padding: .6rem .85rem;
+      gap: .45rem;
+      padding: .3rem .85rem .3rem .65rem;
       background: var(--card);
-      border: 1px solid var(--faint);
-      border-radius: 10px;
-      font: 400 .68rem ui-monospace, SFMono-Regular, Menlo, monospace;
+      border: 1.5px solid var(--ink);
+      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      font: 400 1.1rem/1.2 'Gaegu', 'Patrick Hand', cursive;
       color: var(--ink);
-      letter-spacing: .04em;
       width: fit-content
     }
 
@@ -236,12 +235,14 @@
       }
     }
 
+    /* Hand-ticked checkbox doodle, drawn in the current ink colour (a mask, so it follows dark mode). */
     .status b {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--green);
-      animation: pulse 2s infinite
+      flex: none;
+      width: 20px;
+      height: 20px;
+      background-color: currentColor;
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6c5-1.2 10-1 15-.3.8 4.8.9 9.6.2 14.5-5 .8-10 .9-15 .1-.9-4.8-1-9.6-.2-14.3z'/%3E%3Cpath d='M7.5 12.5l3.8 4L21 3.5' stroke-width='2.4'/%3E%3C/svg%3E") center / contain no-repeat;
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6c5-1.2 10-1 15-.3.8 4.8.9 9.6.2 14.5-5 .8-10 .9-15 .1-.9-4.8-1-9.6-.2-14.3z'/%3E%3Cpath d='M7.5 12.5l3.8 4L21 3.5' stroke-width='2.4'/%3E%3C/svg%3E") center / contain no-repeat
     }
 
     /* Main Container Offset */
@@ -1764,8 +1765,11 @@
         font-size: 1.1rem
       }
 
-      .doodle-links {
-        gap: 1rem 1.25rem
+      /* id selector: must beat the sheet rule that sets every block's max-width */
+      #contact .doodle-links {
+        gap: 1rem 1.25rem;
+        max-width: 290px;
+        margin: 0 auto
       }
 
       .wave-bubble {
@@ -2371,6 +2375,32 @@
                 <path d="M14 19v13M14 13.5v.5M20 32V20M20 25c0-3 2-5 5-5s5 2 5 5v7" />
               </svg></span>
             <span class="doodle-label hand">LinkedIn</span>
+          </a>
+          <a class="doodle-link" href="https://www.credly.com/users/kishore-kaarthik-s/badges" target="_blank"
+            rel="noopener">
+            <span class="doodle-icon" aria-hidden="true"><svg viewBox="0 0 44 44">
+                <path d="M22 4a11 11 0 1 1 0 22 11 11 0 0 1 0-22z" />
+                <path d="M22 9.5l2 4 4.4.6-3.2 3.1.8 4.4-4-2.1-4 2.1.8-4.4-3.2-3.1 4.4-.6z" />
+                <path d="M16 24l-4 15 6-3 4 5 1-14M28 24l4 15-6-3-4 5" />
+              </svg></span>
+            <span class="doodle-label hand">Credly</span>
+          </a>
+          <a class="doodle-link"
+            href="https://wa.me/919952648241?text=Hi%20Kishore!%20I%20found%20your%20portfolio%20and%20wanted%20to%20say%20hello."
+            target="_blank" rel="noopener">
+            <span class="doodle-icon" aria-hidden="true"><svg viewBox="0 0 44 44">
+                <path d="M22 6c9 0 16 7 16 15s-7 15-16 15c-3 0-5-.6-7-1.6L6 37l2.6-7.6C7.5 27 7 24 7 21 7 13 13 6 22 6z" />
+                <path d="M16.5 15c-1 1.2-1 3 0 5 2 4 5 7 9 8.6 2 .8 3.2 0 4-1.2l-1-2.8-3-1-1.2 1.2c-2-1-4-3-5-5l1.2-1.2-1-3z" />
+              </svg></span>
+            <span class="doodle-label hand">WhatsApp</span>
+          </a>
+          <a class="doodle-link" href="https://www.instagram.com/_kishorekk_/" target="_blank" rel="noopener">
+            <span class="doodle-icon" aria-hidden="true"><svg viewBox="0 0 44 44">
+                <path d="M13 6h18c4 0 7 3 7 7v18c0 4-3 7-7 7H13c-4 0-7-3-7-7V13c0-4 3-7 7-7z" />
+                <path d="M22 15a7 7 0 1 1 0 14 7 7 0 0 1 0-14z" />
+                <circle cx="31" cy="12.5" r="1.6" />
+              </svg></span>
+            <span class="doodle-label hand">Instagram</span>
           </a>
         </div>
         <a class="wave-signoff" href="#contact" data-mail-user="skishorekaarthik" data-mail-domain="gmail.com"
