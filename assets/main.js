@@ -80,43 +80,69 @@
     }
   }
 
-  // Returning-visitor note: counts visits (one per browser session) in localStorage.
+  // Visit note: a welcome on the first visit, then a counted line on each return.
+  // One visit = one browser session; the tally lives only in this browser (localStorage).
   var wb = document.querySelector('.welcome-note');
   if (wb) {
-    var vk = 'kk-visits', visits = 0;
+    var vk = 'kk-visits', visits = 0, newVisit = false;
     try {
       visits = parseInt(localStorage.getItem(vk), 10) || 0;
       if (!sessionStorage.getItem(vk)) {
         visits += 1;
+        newVisit = true;
         localStorage.setItem(vk, String(visits));
         sessionStorage.setItem(vk, '1');
       }
-    } catch (e) { visits = 0; }
-    if (visits >= 2) {
+    } catch (e) { newVisit = false; }
+
+    var LINES = {
+      1: 'Oh hey, a new face! \uD83D\uDC4B Pull up a chair and click anything on the desk. It doesn\u2019t bite.',
+      2: 'Welcome back! Visit #2. Are you a recruiter or just a fan of canteen coffee?',
+      3: 'Visit #3. Okay, this is becoming a habit. Same time tomorrow?',
+      4: 'Visit #4. You now know this site better than my mom does.',
+      5: 'Visit #5. High five! \uD83D\uDD90\uFE0F That\u2019s officially a streak.',
+      6: 'Visit #6. You\u2019re either hiring me or auditing me. Either way, hi.',
+      7: 'Visit #7. Lucky number seven. Feeling lucky enough to say hello?',
+      8: 'Visit #8. I should start charging rent for this browser tab.',
+      9: 'Visit #9. My threat model now lists you as \u201Csuspiciously interested\u201D.',
+      10: 'Visit #10. Double digits! \uD83C\uDF89 That\u2019s a filter coffee on me.',
+      11: 'Visit #11. You\u2019re a regular now. Your usual table is ready.'
+    };
+
+    if (newVisit && visits >= 1) {
       var wbMsg = wb.querySelector('.welcome-msg');
       var hideWb = function () {
-        if (wb.hidden) return;
+        if (wb.hidden || wb.classList.contains('welcome-out')) return;
         wb.classList.add('welcome-out');
-        setTimeout(function () { wb.hidden = true; }, 260);
+        setTimeout(function () { wb.hidden = true; wb.classList.remove('welcome-out'); }, 260);
       };
-      if (visits === 2) {
-        wbMsg.textContent = 'Welcome back! Visit #2. Are you a recruiter or just a fan of canteen coffee?';
-      } else if (visits === 3) {
-        wbMsg.textContent = 'Visit #3. Okay, this is becoming a habit. Same time tomorrow?';
-      } else {
-        wbMsg.textContent = 'Visit #' + visits + '. You\u2019re officially a regular. ';
+      wbMsg.textContent = LINES[visits] ||
+        ('Visit #' + visits + '. At this point you\u2019re basically part of the furniture.');
+      if (visits >= 3) {
         var hello = document.createElement('a');
         hello.href = '#contact';
-        hello.textContent = 'Just say hello \u2192';
+        hello.textContent = 'Say hello \u2192';
         hello.addEventListener('click', hideWb);
+        wbMsg.appendChild(document.createTextNode(' '));
         wbMsg.appendChild(hello);
       }
       wb.querySelector('.welcome-close').addEventListener('click', hideWb);
+
+      // Get out of the way once a page (sheet) is opened.
+      var root = document.documentElement;
+      if (window.MutationObserver) {
+        new MutationObserver(function () {
+          var st = root.getAttribute('data-desk-state');
+          if (st && st !== 'desk') hideWb();
+        }).observe(root, { attributes: true, attributeFilter: ['data-desk-state'] });
+      }
+
       setTimeout(function () {
+        var st = root.getAttribute('data-desk-state');
+        if (st && st !== 'desk') return; // arrived straight on a page: skip the note
         wb.hidden = false;
         setTimeout(hideWb, 8000);
       }, 900);
     }
   }
-
 })();
