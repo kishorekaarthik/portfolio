@@ -58,4 +58,26 @@
     a.href = 'mailto:' + addr;
     a.textContent = addr;
   });
+  // Joke cookie note: shown once per visitor, then remembered (localStorage, not a cookie).
+  var note = document.querySelector('.cookie-note');
+  if (note) {
+    var nk = 'kk-cookie-note', seen = null;
+    try { seen = localStorage.getItem(nk); } catch (e) { }
+    if (!seen) {
+      var closeNote = function () {
+        try { localStorage.setItem(nk, 'dismissed'); } catch (e) { }
+        note.classList.add('cookie-out');
+        setTimeout(function () { note.hidden = true; }, 260);
+      };
+      note.querySelector('.cookie-ok').addEventListener('click', closeNote);
+      note.querySelector('.cookie-coffee').addEventListener('click', function () {
+        try { localStorage.setItem(nk, 'dismissed'); } catch (e) { }
+        note.querySelector('.cookie-msg').textContent = 'Excellent taste. \u2615 Filter coffee it is. Still no cookies though.';
+        note.querySelector('.cookie-actions').hidden = true;
+        setTimeout(closeNote, 1800);
+      });
+      setTimeout(function () { note.hidden = false; }, 700);
+    }
+  }
+
 })();

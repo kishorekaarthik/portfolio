@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Kishore Kaarthik S • Software &amp; Cybersecurity Engineer</title>
   <meta http-equiv="Content-Security-Policy"
-    content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
+    content="default-src 'none'; script-src 'self' https://static.cloudflareinsights.com; connect-src https://cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/fonts/fonts.css">
@@ -1428,6 +1428,92 @@
         stroke-dashoffset: 0
       }
     }
+    /* Joke cookie note (shown once per visitor by assets/main.js) */
+    .cookie-note {
+      position: fixed;
+      right: 1.25rem;
+      bottom: 1.25rem;
+      z-index: 300;
+      width: min(360px, calc(100vw - 2rem));
+      padding: 1rem 1.1rem .9rem;
+      background: var(--card);
+      color: var(--ink);
+      border: 2px solid var(--ink);
+      border-radius: 18px 10px 20px 12px;
+      box-shadow: 4px 5px 0 var(--ink);
+      font-size: 1.2rem;
+      line-height: 1.25;
+      transform: rotate(-1deg);
+      animation: cookieIn .35s ease-out both
+    }
+
+    .cookie-note[hidden] {
+      display: none
+    }
+
+    .cookie-note.cookie-out {
+      animation: cookieOut .25s ease-in both
+    }
+
+    .cookie-msg {
+      margin: 0 0 .75rem
+    }
+
+    .cookie-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem
+    }
+
+    .cookie-actions[hidden] {
+      display: none
+    }
+
+    .cookie-actions button {
+      padding: .3rem .85rem;
+      font: inherit;
+      font-size: 1.05rem;
+      color: var(--ink);
+      background: transparent;
+      border: 2px solid var(--ink);
+      border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      cursor: pointer
+    }
+
+    .cookie-actions button:hover {
+      background: var(--ink);
+      color: var(--bg)
+    }
+
+    @keyframes cookieIn {
+      from { opacity: 0; transform: translateY(16px) rotate(-1deg) }
+      to { opacity: 1; transform: rotate(-1deg) }
+    }
+
+    @keyframes cookieOut {
+      to { opacity: 0; transform: translateY(16px) rotate(-1deg) }
+    }
+
+    @media (max-width: 900px) {
+      .cookie-note {
+        left: .75rem;
+        right: .75rem;
+        bottom: .75rem;
+        width: auto;
+        padding: .8rem .9rem .75rem;
+        font-size: 1.05rem
+      }
+
+      .cookie-msg {
+        margin-bottom: .55rem
+      }
+
+      .cookie-actions button {
+        font-size: .95rem;
+        padding: .25rem .7rem
+      }
+    }
+
   </style>
 </head>
 
@@ -2038,8 +2124,20 @@
     <footer>&copy;2026 Kishore Kaarthik S &bull; made in Pennadam, Tamil Nadu, with far too much coffee</footer>
   </div>
 
+  <aside class="cookie-note hand" aria-label="Cookie note" hidden>
+    <p class="cookie-msg"><span aria-hidden="true">🍪</span> <b>Cookie policy:</b> no cookies here, and nothing that
+      follows you around. If you have freshly baked ones though, please ship them to Pennadam.</p>
+    <div class="cookie-actions">
+      <button type="button" class="cookie-ok">Fair enough 🍪</button>
+      <button type="button" class="cookie-coffee">I prefer filter coffee ☕</button>
+    </div>
+  </aside>
+
   <script src="assets/main.js"></script>
   <script src="assets/desk.js"></script>
+  <!-- Cloudflare Web Analytics (cookie-free visit counter) -->
+  <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js"
+    data-cf-beacon='{"token": "9ce459383b9947d784f12da9a5b646ab"}'></script>
 </body>
 
 </html>
