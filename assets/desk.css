@@ -203,60 +203,20 @@
   50% { transform: translateY(-4px); opacity: .2 }
 }
 
-/* ---------- phones ---------- */
-
-@media (max-width: 900px) {
-  .desk-mode .hero {
-    column-gap: 1rem;
-    padding: 1.25rem 1.25rem .5rem
-  }
-
-  .desk-mode .avatar {
-    width: 64px
-  }
-
-  .desk-mode .hero h1 {
-    font-size: 1.85rem
-  }
-
-  .desk-mode .hero .role {
-    font-size: .95rem;
-    letter-spacing: .01em
-  }
-
-  .desk-mode .hero .quote {
-    font-size: 1rem
-  }
-
-  .desk-mode .desk {
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas:
-      "board board"
-      "note tool"
-      "laptop mug";
-    row-gap: 1rem;
-    width: calc(100% - 2rem);
-    padding: .5rem 0 1.5rem
-  }
-
-  .desk .desk-surface {
-    display: none
-  }
-
-  .desk-label {
-    margin-top: .4rem;
-    font-size: 1.25rem
-  }
-
-  .obj-board svg { height: clamp(56px, 12svh, 120px) }
-  .obj-notebook svg,
-  .obj-toolbox svg,
-  .obj-mug svg { height: clamp(44px, 9.5svh, 96px) }
-  .obj-laptop svg { height: clamp(48px, 10svh, 104px) }
+/* <nav> is display:flex on the long page, so the hidden desk needs this there. */
+:root:not(.desk-mode) .desk[hidden] {
+  display: none
 }
 
-.desk[hidden] {
+/* assets/boot.js turns desk mode on before the first paint. Until desk.js takes
+   over (it sets data-desk-state), keep the sections out of the layout and the desk
+   invisible but in place, so nothing jumps and the sketch-in starts from blank. */
+.desk-mode section.s:not(.is-open) {
   display: none
+}
+
+.desk-mode:not([data-desk-state]) .desk {
+  visibility: hidden
 }
 
 /* Phones: the desk replaces the section links in the top bar, which
@@ -489,30 +449,6 @@
   max-width: calc(1100px - 2 * var(--sheet-pad));
   margin-left: auto;
   margin-right: auto
-}
-
-/* Short phones (iPhone SE and similar): tighten so the whole desk fits. */
-@media (max-width: 900px) and (max-height: 720px) {
-  .desk-mode .hero {
-    padding-top: .75rem;
-    padding-bottom: .25rem
-  }
-
-  .desk-mode .hero .quote {
-    margin-top: .35rem;
-    font-size: .92rem;
-    line-height: 1.2
-  }
-
-  .desk-mode .desk {
-    row-gap: .5rem;
-    padding: .25rem 0 1rem
-  }
-
-  .desk-label {
-    margin-top: .2rem;
-    font-size: 1.1rem
-  }
 }
 
 /* ---------- doodle paper on sheets ---------- */
@@ -994,4 +930,285 @@
     height: auto;
     color: var(--ink)
   }
+}
+
+/* ---------- phones: the desk seen from above ----------
+   The same paper background as desktop, with the intro on a taped note card, the five objects
+   scattered at small angles, and a hanging lamp in the top bar as the theme
+   switch. Everything here is phone-only; the desktop room is untouched. */
+
+@media (max-width: 900px) {
+  .desk-mode {
+    --wood-ring: color-mix(in srgb, var(--ink) 16%, transparent);
+    --lamp-bulb: var(--desk-paper);
+    --lay-shadow: rgba(0, 0, 0, .14)
+  }
+
+  .desk-mode[data-theme="dark"] {
+    --lamp-bulb: #FFE8A3;
+    --lay-shadow: rgba(0, 0, 0, .5)
+  }
+
+  /* the lamp hangs from the top edge */
+  .desk-mode header.sidebar {
+    padding: .7rem 1.25rem;
+    background: transparent;
+    border-bottom: 0
+  }
+
+  .desk-mode header.sidebar .tg {
+    width: 48px;
+    height: 44px;
+    padding: 0
+  }
+
+  .desk-mode header.sidebar .tg .moon,
+  .desk-mode header.sidebar .tg .sun {
+    display: none
+  }
+
+  .desk-mode header.sidebar .tg .tg-lamp {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 1.25rem;
+    width: 48px;
+    height: 92px;
+    stroke-width: 2.2;
+    overflow: visible;
+    transform-origin: 50% 0;
+    filter: drop-shadow(2px 3px 0 var(--lay-shadow))
+  }
+
+  .desk-mode header.sidebar .tg:active .tg-lamp {
+    animation: deskSwing .7s ease-in-out
+  }
+
+  .tg-lamp-shade { fill: var(--desk-yellow) }
+  .tg-lamp-bulb { fill: var(--lamp-bulb) }
+  .tg-lamp-rays { opacity: 0; transition: opacity .3s }
+  .desk-mode[data-theme="dark"] .tg-lamp-rays { opacity: .8; stroke: #FFE8A3 }
+
+  /* intro: a note card taped to the desk */
+  .desk-mode .hero {
+    grid-template-columns: auto minmax(0, 1fr);
+    justify-content: stretch;
+    column-gap: .85rem;
+    margin: .9rem 1.1rem 0;
+    padding: 1.1rem 1rem .9rem;
+    background: var(--card);
+    border: 2px solid var(--ink);
+    border-radius: 3px 5px 4px 6px;
+    box-shadow: 3px 4px 0 var(--lay-shadow);
+    transform: rotate(-1.4deg)
+  }
+
+  .desk-mode .hero::before {
+    content: '';
+    position: absolute;
+    top: -11px;
+    left: 50%;
+    width: 78px;
+    height: 22px;
+    margin-left: -39px;
+    background: color-mix(in srgb, var(--desk-yellow) 82%, transparent);
+    border-left: 1.5px dashed color-mix(in srgb, var(--ink) 35%, transparent);
+    border-right: 1.5px dashed color-mix(in srgb, var(--ink) 35%, transparent);
+    transform: rotate(2.5deg)
+  }
+
+  .desk-mode .avatar-wrap {
+    grid-row: 1 / span 2;
+    align-self: center
+  }
+
+  .desk-mode .avatar {
+    width: 60px
+  }
+
+  .desk-mode .hero h1 {
+    font-size: 1.7rem;
+    align-self: end
+  }
+
+  .desk-mode .hero .role {
+    margin-top: .3rem;
+    font-size: .92rem;
+    letter-spacing: .01em;
+    align-self: start
+  }
+
+  .desk-mode .hero .quote {
+    grid-column: 1 / -1;
+    max-width: none;
+    margin-top: .7rem;
+    font-size: 1.08rem;
+    line-height: 1.2
+  }
+
+  .desk-mode .hero-status {
+    grid-column: 1 / -1;
+    margin: .65rem 0 0
+  }
+
+  /* objects scattered on the tabletop */
+  .desk-mode .desk {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-areas:
+      "board board board board note note"
+      "laptop laptop laptop laptop laptop ."
+      "tool tool tool mug mug mug";
+    align-items: center;
+    row-gap: .35rem;
+    column-gap: 0;
+    width: calc(100% - 1.5rem);
+    padding: 1.1rem 0 1.5rem
+  }
+
+  .desk-mode .desk-obj {
+    padding: .25rem .35rem
+  }
+
+  .desk-mode .desk-obj svg {
+    filter: drop-shadow(2px 3px 0 var(--lay-shadow))
+  }
+
+  .desk-mode .desk-obj:active svg {
+    animation: deskWig .55s ease-in-out
+  }
+
+  .desk-mode .obj-board { transform: rotate(-5deg) }
+  .desk-mode .obj-notebook { transform: translateY(1.1rem) rotate(8deg) }
+  .desk-mode .obj-laptop { transform: translateX(8%) rotate(-3deg) }
+  .desk-mode .obj-toolbox { transform: translateY(-.3rem) rotate(5deg) }
+  .desk-mode .obj-mug { transform: translate(-6%, .3rem) rotate(-7deg) }
+
+  .obj-board svg { height: clamp(60px, 14svh, 128px) }
+  .obj-notebook svg,
+  .obj-toolbox svg,
+  .obj-mug svg { height: clamp(46px, 11svh, 100px) }
+  .obj-laptop svg { height: clamp(54px, 13svh, 118px) }
+
+  /* labels are little paper tags */
+  .desk-mode .desk-label {
+    margin-top: .3rem;
+    padding: 0 .55rem;
+    font-size: 1.12rem;
+    line-height: 1.3;
+    color: var(--ink);
+    background: var(--card);
+    border: 1.5px solid var(--ink);
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+    box-shadow: 1.5px 2px 0 var(--lay-shadow);
+    white-space: nowrap
+  }
+
+  /* coffee rings and a crumpled note between the objects */
+  .desk-mode .desk::before,
+  .desk-mode .desk::after {
+    content: '';
+    position: absolute;
+    border: 3px solid var(--wood-ring);
+    border-radius: 48% 52% 50% 50%;
+    pointer-events: none
+  }
+
+  .desk-mode .desk::before {
+    right: 9%;
+    top: 45%;
+    width: 52px;
+    height: 50px;
+    border-right-color: transparent
+  }
+
+  .desk-mode .desk::after {
+    left: 4%;
+    bottom: 3%;
+    width: 30px;
+    height: 29px;
+    border-width: 2px;
+    border-bottom-color: transparent
+  }
+
+  .desk-mode .desk-props {
+    display: block;
+    position: absolute;
+    inset: 0;
+    pointer-events: none
+  }
+
+  .desk-mode .desk-props .prop {
+    display: none
+  }
+
+  .desk-mode .desk-props .prop-ball {
+    display: block;
+    position: absolute;
+    right: 3%;
+    top: 62%;
+    width: 26px;
+    height: auto;
+    transform: rotate(-20deg);
+    filter: drop-shadow(1.5px 2px 0 var(--lay-shadow))
+  }
+
+}
+
+@keyframes deskSwing {
+  0%, 100% { transform: rotate(0) }
+  25% { transform: rotate(7deg) }
+  55% { transform: rotate(-5deg) }
+  80% { transform: rotate(2deg) }
+}
+
+/* Short phones (iPhone SE and similar): tighten so the whole desk fits. */
+@media (max-width: 900px) and (max-height: 720px) {
+  .desk-mode header.sidebar {
+    padding-top: .45rem;
+    padding-bottom: .45rem
+  }
+
+  .desk-mode header.sidebar .tg .tg-lamp {
+    width: 42px;
+    height: 80px
+  }
+
+  .desk-mode .hero {
+    margin-top: .6rem;
+    padding: .85rem .9rem .7rem
+  }
+
+  .desk-mode .avatar {
+    width: 50px
+  }
+
+  .desk-mode .hero h1 {
+    font-size: 1.5rem
+  }
+
+  .desk-mode .hero .quote {
+    margin-top: .45rem;
+    font-size: .95rem;
+    line-height: 1.15
+  }
+
+  .desk-mode .hero-status {
+    margin-top: .45rem
+  }
+
+  .desk-mode .desk {
+    row-gap: .1rem;
+    padding: .7rem 0 1rem
+  }
+
+  .desk-mode .desk-label {
+    margin-top: .15rem;
+    font-size: 1rem
+  }
+
+  .obj-board svg { height: clamp(56px, 12svh, 120px) }
+  .obj-notebook svg,
+  .obj-toolbox svg,
+  .obj-mug svg { height: clamp(44px, 9.5svh, 96px) }
+  .obj-laptop svg { height: clamp(48px, 11svh, 104px) }
 }

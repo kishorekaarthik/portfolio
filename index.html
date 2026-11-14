@@ -11,6 +11,7 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/fonts/fonts.css">
   <link rel="stylesheet" href="assets/desk.css">
+  <script src="assets/boot.js"></script>
   <style>
     .kk-framed body {
       visibility: hidden
@@ -155,7 +156,8 @@
       stroke-linejoin: round
     }
 
-    .tg .sun {
+    .tg .sun,
+    .tg .tg-lamp {
       display: none
     }
 
@@ -1910,6 +1912,12 @@
             <circle cx="12" cy="12" r="4.2" />
             <path
               d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.3 5.3L7 7M17 17l1.7 1.7M5.3 18.7L7 17M17 7l1.7-1.7" />
+          </svg>
+          <svg class="tg-lamp" viewBox="0 0 48 92" aria-hidden="true">
+            <path d="M24 0c1 14-1 28 0 42" />
+            <path class="tg-lamp-shade" d="M7 70c0-17 7-28 17-28s17 11 17 28z" />
+            <path class="tg-lamp-bulb" d="M17 70c0 9 14 9 14 0" />
+            <path class="tg-lamp-rays" d="M24 84v5M11 80l-3 4M37 80l3 4" />
           </svg>
         </button>
       </nav>
