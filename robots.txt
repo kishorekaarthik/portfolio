@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /.secrets/
+
+# flag 1 isn't here. it's somewhere you'd look
+# if you wanted to see how this page was built.

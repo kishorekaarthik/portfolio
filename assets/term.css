@@ -1,0 +1,133 @@
+/* Terminal home page. One centred window: pinned whoami header, scrolling session,
+   cookie line at the foot. Dark by design; `amber` swaps the tokens. */
+:root {
+  --stage: #0a0b0c; --t-bg: #0d0f10; --t-fg: #c9cfcb; --t-dim: #6c7470; --t-acc: #9fd38a;
+  --t-line: #22272a; --t-warn: #e0a46a; --t-bad: #e07a7a;
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  --pix: "Silkscreen", "IBM Plex Mono", ui-monospace, monospace;
+  color-scheme: dark;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: var(--stage);
+}
+:root.t-amber { --stage: #0b0702; --t-bg: #120c04; --t-fg: #ffb547; --t-dim: #9a6c2c; --t-acc: #ffd98f; --t-line: #2e2010; --t-warn: #ffe2a8; --t-bad: #ff7a5a }
+:root.t-amber .win { text-shadow: 0 0 6px rgba(255, 181, 71, .35) }
+.kk-framed body { visibility: hidden }
+[hidden] { display: none !important }
+
+*, *::before, *::after { box-sizing: inherit }
+body {
+  margin: 0; background: var(--stage); color: var(--t-fg); font: 14px/1.7 var(--mono); transition: background .4s;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: clamp(20px, 6vw, 56px) 40px;
+}
+/* night-room background (assets/term-bg.js) with a soft vignette so the terminal stays the focus */
+#bg { position: fixed; z-index: 0; image-rendering: pixelated; pointer-events: none }
+.bg-dim { position: fixed; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(0, 0, 0, .35), rgba(0, 0, 0, .1) 80%) }
+.win { position: relative; z-index: 1; box-shadow: 0 20px 60px rgba(0, 0, 0, .55) }
+.win { max-width: 880px; margin: 0 auto; background: var(--t-bg); border: 1px solid var(--t-line); display: flex; flex-direction: column; transition: background .4s, border-color .4s }
+.bar { display: flex; gap: 6px; align-items: center; padding: 8px 12px; border-bottom: 1px solid var(--t-line); color: var(--t-dim); font-size: 11px; flex-wrap: wrap }
+.bar i { width: 9px; height: 9px; border-radius: 50%; background: var(--t-line); display: inline-block }
+.bar .ttl { margin-left: 8px }
+.bar .r { margin-left: auto; display: flex; gap: 14px; align-items: center }
+.bar a, .bar .cmdlink { color: var(--t-dim); text-decoration: none }
+.bar a:hover, .bar .cmdlink:hover { color: var(--t-acc) }
+html:not(.js) .js-only { display: none !important }
+
+.pin { padding: 18px 24px 14px; border-bottom: 1px dashed var(--t-line) }
+.pin p, .scr p, .scr pre, .content p { margin: 0 }
+.nm { font-family: var(--pix); font-weight: 400; font-size: clamp(20px, 4.4vw, 32px); line-height: 1.25; margin: 4px 0 0; letter-spacing: .02em }
+
+.scr { padding: 14px 24px 20px; height: min(540px, 56vh); overflow-y: auto; scrollbar-color: var(--t-line) transparent }
+html:not(.js) .scr { display: none }
+.scr pre { font: inherit; white-space: pre-wrap; word-break: break-word }
+.line { display: flex; gap: 8px; align-items: baseline }
+.line input { all: unset; flex: 1; min-width: 0; color: var(--t-fg); caret-color: var(--t-acc); font-family: var(--mono) }
+.line input::placeholder { color: var(--t-dim) }
+.typing .line input { caret-color: transparent }
+
+/* content sections: the no-JS page, and the source the terminal prints from */
+.content { padding: 4px 20px 20px }
+html.js .content { display: none }
+.content section { margin-top: 18px }
+.sec-h { font: 600 13px var(--mono); color: var(--t-acc); margin: 0 0 6px; letter-spacing: .04em }
+.scr .sec-h, .scr .lens-h { display: none }
+.lens-h { font: 600 13px var(--mono); color: var(--t-dim); margin: 10px 0 4px }
+
+.acc { color: var(--t-acc) } .dim { color: var(--t-dim) } .warn { color: var(--t-warn) } .bad { color: var(--t-bad) }
+.gap { height: 12px }
+.row { display: flex; gap: 12px } .row > span:first-child { width: 12ch; flex: none }
+.blk { border-left: 1px solid var(--t-line); padding-left: 12px; margin: 4px 0 }
+.blk p + p { margin-top: 8px }
+.prose { max-width: 62ch }
+a { color: var(--t-fg); text-decoration-color: var(--t-dim); text-underline-offset: 3px }
+:focus-visible { outline: 1px solid var(--t-acc); outline-offset: 2px }
+.cmdlink { all: unset; cursor: pointer; color: var(--t-fg) }
+.cmdlink:hover, .cmdlink:focus-visible { color: var(--t-acc); text-decoration: underline }
+
+/* [ bracket ] buttons: brackets drift outward and the label lights up */
+.tbtn { all: unset; box-sizing: border-box; cursor: pointer; color: var(--t-acc); display: inline-flex; align-items: baseline; white-space: nowrap; text-decoration: none; font-family: var(--mono) }
+.tbtn::before, .tbtn::after { transition: transform .18s ease }
+.tbtn::before { content: "["; margin-right: .5ch }
+.tbtn::after { content: "]"; margin-left: .5ch }
+.tbtn > span { padding: 0 .35ch; transition: background .18s, color .18s }
+.tbtn:hover::before, .tbtn:focus-visible::before { transform: translateX(-4px) }
+.tbtn:hover::after, .tbtn:focus-visible::after { transform: translateX(4px) }
+.tbtn:hover > span, .tbtn:focus-visible > span, .tbtn.on > span { background: var(--t-acc); color: var(--t-bg) }
+/* keyboard highlight (arrow keys) */
+.cmdlink.kbsel { background: var(--t-acc); color: var(--t-bg); text-decoration: none; box-shadow: 0 0 0 2px var(--t-acc) }
+.tbtn.kbsel > span { background: var(--t-acc); color: var(--t-bg) }
+.tbtn.kbsel::before { transform: translateX(-4px) }
+.tbtn.kbsel::after { transform: translateX(4px) }
+a.kbsel:not(.tbtn) { color: var(--t-acc); outline: 1px dashed var(--t-acc); outline-offset: 2px }
+@media (pointer: coarse) { .keys { display: none } }
+.tbtn.ghost { color: var(--t-dim) }
+.tbtn.ghost:hover > span { background: var(--t-dim); color: var(--t-bg) }
+.btns { display: flex; gap: 14px; flex-wrap: wrap; align-items: baseline }
+
+.mail { border: 1px solid var(--t-line); padding: 10px 14px; margin: 6px 0; max-width: 60ch }
+.mail .hd { display: grid; grid-template-columns: 9ch minmax(0, 1fr); gap: 0 8px }
+.mail pre { margin-top: 10px !important }
+.swatch { display: inline-block; width: 10px; height: 10px; margin-right: 6px; border: 1px solid var(--t-line) }
+
+.cookie { border-top: 1px solid var(--t-line); padding: 10px 20px; font-size: 12.5px; display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; animation: slideUp .45s cubic-bezier(.2, .8, .2, 1) both }
+.cookie p { margin: 0; flex: 1 1 300px; min-width: 0 }
+
+/* motion */
+@keyframes slideUp { from { transform: translateY(100%); opacity: 0 } to { transform: none; opacity: 1 } }
+.rv > *, .rv .blk > * { animation: lineIn .32s ease-out both; animation-delay: calc(var(--i, 0) * 45ms) }
+@keyframes lineIn { from { opacity: 0; transform: translateY(4px) } to { opacity: 1; transform: none } }
+.flash { animation: flash .9s ease-out }
+@keyframes flash { 0% { color: var(--t-bg); background: var(--t-acc) } 100% { background: transparent } }
+.steam span { display: inline-block; vertical-align: top; line-height: inherit; animation: steam 1.8s ease-in-out infinite }
+.steam span:nth-child(2) { animation-delay: .4s }
+@keyframes steam { 0%, 100% { transform: translateY(0); opacity: .9 } 50% { transform: translate(2px, -3px); opacity: .4 } }
+.boot { color: var(--t-dim) } .boot b { color: var(--t-acc); font-weight: 400 }
+.crt { animation: crt .5s ease-out }
+@keyframes crt { 0% { filter: brightness(2.2) saturate(0); transform: scaleY(.985) } 100% { filter: none; transform: none } }
+
+/* hello intro: shown only while <html> has .intro-on (set in term-boot.js) */
+.intro { display: none }
+.intro-on .intro { position: fixed; inset: 0; z-index: 5; display: flex; align-items: center; justify-content: center; pointer-events: none; transition: opacity .45s ease }
+.intro-on .intro.gone { opacity: 0 }
+.intro .word { position: absolute; font: 500 clamp(32px, 7vw, 64px)/1.2 var(--mono); color: var(--t-fg); opacity: 0; transform: translateY(6px); transition: opacity .22s ease, transform .3s ease; white-space: nowrap }
+.intro .word.on { opacity: 1; transform: none }
+.intro .ta { font-family: 'Hello Tamil', var(--mono) }
+.intro .hi { font-family: 'Hello Devanagari', var(--mono) }
+.intro .jp { font-family: 'Hello JP', var(--mono) }
+.intro .cur { display: inline-block; width: .55em; height: 1em; background: var(--t-acc); vertical-align: -.12em; margin-left: 4px; animation: blink 1s steps(1) infinite }
+@keyframes blink { 50% { opacity: 0 } }
+.win { transition: opacity .5s ease, transform .5s cubic-bezier(.2, .8, .2, 1), filter .5s, background .4s, border-color .4s }
+.intro-on .win { opacity: 0; transform: scale(.96) translateY(8px); filter: blur(2px) }
+.intro-on.intro-done .win { opacity: 1; transform: none; filter: none }
+
+@media (max-width: 520px) {
+  body { font-size: 13px }
+  .pin, .scr, .content { padding-left: 14px; padding-right: 14px }
+  .cookie { padding-left: 14px; padding-right: 14px }
+  .row > span:first-child { width: 10ch }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important }
+}
