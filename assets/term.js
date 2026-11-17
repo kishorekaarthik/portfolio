@@ -89,6 +89,12 @@
     root.classList.toggle('t-amber', name === 'amber');
     theme = name;
     store.set('kk-term-theme', name);
+    // Theme lists printed earlier in the session should show the current choice, not a stale one.
+    [].forEach.call(log.querySelectorAll('.tbtn[data-run^="theme "]'), function (b) {
+      var on = b.getAttribute('data-run') === 'theme ' + name;
+      b.classList.toggle('on', on);
+      b.classList.toggle('ghost', !on);
+    });
     flicker();
     return true;
   }
