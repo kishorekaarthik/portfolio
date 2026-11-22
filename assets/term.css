@@ -60,6 +60,9 @@ html.js .content { display: none }
 .row { display: flex; gap: 12px } .row > span:first-child { width: 12ch; flex: none }
 .blk { border-left: 1px solid var(--t-line); padding-left: 12px; margin: 4px 0 }
 .blk p + p { margin-top: 8px }
+/* education as a git log: wrapped lines hang under the message, not the hash */
+.glog p { padding-left: 10ch; text-indent: -10ch }
+.glog p + p { margin-top: 4px }
 .prose { max-width: 62ch }
 a { color: var(--t-fg); text-decoration-color: var(--t-dim); text-underline-offset: 3px }
 :focus-visible { outline: 1px solid var(--t-acc); outline-offset: 2px }

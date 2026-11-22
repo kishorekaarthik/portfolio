@@ -153,7 +153,7 @@
   }
 
   // ---------- commands ----------
-  var SECTIONS = ['projects', 'skills', 'certs', 'hackathons', 'resume', 'contact'];
+  var SECTIONS = ['education', 'projects', 'skills', 'certs', 'hackathons', 'resume', 'contact'];
   var HISTORY = ['git commit -m "final"', 'git commit -m "final final"', 'git push --force   # sorry', 'chmod 777 everything   # it was 2am',
     'sudo apt install patience', 'ssh prod   # nope, closed it', 'echo "hire me" > /dev/recruiter'];
   function rows(list) {
@@ -163,7 +163,7 @@
   }
   var C = {
     help: function () {
-      out(rows([[cmdl('about'), 'the honest story (or the recruiter one)'], [cmdl('ls'), 'list sections'], [cmdl('projects'), 'what I\'ve built'],
+      out(rows([[cmdl('about'), 'the honest story (or the recruiter one)'], [cmdl('ls'), 'list sections'], [cmdl('education'), 'school + college, as a git log'], [cmdl('projects'), 'what I\'ve built'],
         [cmdl('skills'), 'languages and tools'], [cmdl('certs'), 'verified credentials'], [cmdl('hackathons'), 'battle scars'],
         [cmdl('resume'), 'get the pdf'], [cmdl('contact'), 'say hello'], [cmdl('mail'), 'pre-filled email'],
         [cmdl('theme'), 'switch to a retro screen'], [cmdl('desk'), 'the old desk-room version'], ['clear', 'clean the screen']]) +
@@ -174,7 +174,7 @@
     'about --honest': function () { about('honest'); },
     'about --recruiter': function () { about('recruiter'); },
     ls: function () {
-      out(rows([[cmdl('about'), 'pennadam → rec → job hunt'], [cmdl('projects'), 'cybershield, securedb'], [cmdl('skills'), 'java, python, spring, pytorch…'],
+      out(rows([[cmdl('about'), 'pennadam → rec → job hunt'], [cmdl('education'), 'rec chennai, cgpa 7.75'], [cmdl('projects'), 'cybershield, securedb'], [cmdl('skills'), 'java, python, spring, pytorch…'],
         [cmdl('certs'), 'fortinet ×3, aws'], [cmdl('hackathons'), 'SIH 2025 winner, 1 paper'], [cmdl('resume'), 'resume.pdf'], [cmdl('contact'), 'say hello']]) +
         '<p class="dim keys">use ↑ ↓ to pick, enter to open, tab to complete.</p>');
     },
@@ -221,7 +221,7 @@
   C['ls .secrets/'] = C['ls .secrets'];
 
   // Old desk links (#work, #scars…) and shareable section links.
-  var HASH = { about: 'about', skills: 'skills', scars: 'hackathons', hackathons: 'hackathons', work: 'projects', projects: 'projects', certs: 'certs', resume: 'resume', contact: 'contact' };
+  var HASH = { about: 'about', education: 'education', skills: 'skills', scars: 'hackathons', hackathons: 'hackathons', work: 'projects', projects: 'projects', certs: 'certs', resume: 'resume', contact: 'contact' };
   function setHash(cmd) {
     var h = cmd === 'about' || SECTIONS.indexOf(cmd) !== -1 ? '#' + cmd : '';
     try { history.replaceState(null, '', location.pathname + location.search + h); } catch (e) { }
@@ -266,7 +266,7 @@
   }
 
   // Tab completion over the listed commands only (hidden ones stay hidden).
-  var COMPLETE = ['help', 'about', 'about --honest', 'about --recruiter', 'ls', 'projects', 'skills', 'certs', 'hackathons',
+  var COMPLETE = ['help', 'about', 'about --honest', 'about --recruiter', 'ls', 'education', 'projects', 'skills', 'certs', 'hackathons',
     'resume', 'contact', 'mail', 'theme', 'theme quiet', 'theme amber', 'desk', 'clear'];
   function complete() {
     var v = cli.value.toLowerCase();
